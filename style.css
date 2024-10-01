@@ -1,0 +1,103 @@
+body{
+    background-color: beige;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    flex-basis:100%;
+}
+
+/*.main > *{
+    border: 1px solid black;
+}*/
+
+#qqq{
+    margin:0;
+    font-size: x-large;
+    font-weight: 600;
+}
+
+.dateheader{
+    font-size: x-large;
+}
+
+.header{
+    flex-basis: 10%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.datenow{
+    margin-left: 10px;
+}
+
+.table{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+tr{
+    display:flex;
+}
+
+tr>td{
+    max-width: 50px;
+    min-width: 50px;
+    text-align: center;
+}
+
+.buff>td{
+    max-width: 100px;
+    min-width: 100px;
+}
+
+.buffer > td{
+    width: 100px;
+}
+
+.name{
+    max-width: 90px;
+    min-width: 90px;
+}
+
+.plan {
+    border: 1px solid beige;
+}
+
+.vehicle{
+    width: 10%;
+}
+
+.footer{
+    flex-basis: 10%;
+}
+
+input{
+    box-sizing: border-box;
+    width:100%;
+    border: none;
+    text-align: center;
+}
+
+td{
+    border: 1px solid black;
+}
+
+.left{
+    min-width: 50px;
+}
+
+.v1{
+    display: flex;
+    
+}
+
+.inputform{
+    display: flex;
+}
+
+#nameinput{
+    flex-basis: 100px;
+}
