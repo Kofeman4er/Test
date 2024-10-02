@@ -1,3 +1,5 @@
+const currentDate = new Date().toDateString();
+
 function addName() {
     let inp = document.getElementById("nameinput").value
     document.getElementById("nameselector").insertAdjacentHTML('beforeend', '<option value="' + inp + '"></option>')
