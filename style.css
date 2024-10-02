@@ -18,6 +18,17 @@ body{
     font-weight: 600;
 }
 
+#plantotal >*{
+    margin:0;
+}
+
+#plantotal{
+    display: flex;
+    margin-left: 100px;
+}
+
+
+
 .dateheader{
     font-size: x-large;
 }
