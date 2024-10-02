@@ -1,13 +1,3 @@
-const currentDate = new Date().toDateString();
-
-/*function sendMessage() {
-    document.getElementById("zone").innerHTML('<option value="6"></option>')
-    console.log(document.getElementById("zone"))
-    console.log(n)
-};*/
-//appendChild('<option value="7"></option>'
-
-
 function addName() {
     let inp = document.getElementById("nameinput").value
     document.getElementById("nameselector").insertAdjacentHTML('beforeend', '<option value="' + inp + '"></option>')
@@ -15,18 +5,26 @@ function addName() {
     document.getElementById("workingtoday").insertAdjacentHTML('beforeend', '<p>' + inp + '</p>');
 };
 
-//let elem = document.getElementById("hyster").children[0];
-//console.log(elem.rows[0].cells[0].innerHTML);
-
-/*let input = document.getElementById("hyster").children[0];
-let inputdetails = input.rows[0].cells[3]
-let inputValue = inputdetails.children[0].value;
-console.log(inputValue);*/
-
-//const val = document.getElementById("hyster").children[0].rows[0].cells[3].children[0].value;
-
 function getNumber(){
     let input = document.getElementById("hyster").children[0].rows[0].cells[3].children[0].value;
     console.log(input);
     document.getElementById("plan").children[0].rows[0].cells[3].children[0].value = input;
+}
+
+
+function tester(n){
+    let sum = 0;
+    let planSum = 0;
+    let pp = document.getElementById("hyster").children[0]
+    for(let i = 0; i<pp.rows.length; i++){
+            sum = sum + Number(document.getElementById("hyster").children[0].rows[i].cells[n].children[0].value);      
+    }
+    document.getElementById("fact").children[0].rows[0].cells[n].innerHTML = sum;
+    let plan = document.getElementById("plan").children[0].rows[0].cells[n].children[0].value;
+    document.getElementById("diff").children[0].rows[0].cells[n].innerHTML = sum - Number(plan);
+    let gg = document.getElementById("plan").children[0].children[0];
+    for(let j = 2; j<gg.cells.length; j++){
+        planSum = planSum + Number(document.getElementById("plan").children[0].rows[0].cells[j].children[0].value);
+    }
+    document.getElementById("plancount").innerHTML = planSum;
 }
