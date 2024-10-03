@@ -30,3 +30,18 @@ function tester(n){
     }
     document.getElementById("plancount").innerHTML = planSum;
 }
+
+function addHysterRow(){
+    let rowCount = document.getElementById("hyster").children[0].rows.length
+    let columnCount = document.getElementById("hyster").children[0].rows[0].cells.length;
+    let hysterRow = document.getElementById("hyster").children[0].children[0];
+    let newHysterRow = hysterRow.cloneNode(true);
+    document.getElementById("hyster").children[0].append(newHysterRow)
+    for(let i = 1; i<columnCount; i++){
+        document.getElementById("hyster").children[0].children[rowCount].children[i].children[0].value = null;
+    }
+}
+
+function removeHysterRow(id){
+
+}
