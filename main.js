@@ -13,6 +13,9 @@ function getNumber(){
     document.getElementById("plan").children[0].rows[0].cells[3].children[0].value = input;
 }
 
+function isNumber(value) {
+  return typeof value === 'number';
+}
 
 function tester(n){
     let sum = 0;
@@ -22,8 +25,14 @@ function tester(n){
             sum = sum + Number(document.getElementById("hyster").children[0].rows[i].cells[n].children[0].value);      
     }
     document.getElementById("fact").children[0].rows[0].cells[n].innerHTML = sum;
+    if(document.getElementById("fact").children[0].rows[0].cells[n].innerHTML == 0){
+        document.getElementById("fact").children[0].rows[0].cells[n].innerHTML = "-"
+    }
     let plan = document.getElementById("plan").children[0].rows[0].cells[n].children[0].value;
     document.getElementById("diff").children[0].rows[0].cells[n].innerHTML = sum - Number(plan);
+    if(document.getElementById("diff").children[0].rows[0].cells[n].innerHTML == 0){
+        document.getElementById("diff").children[0].rows[0].cells[n].innerHTML = "-"
+    }
     let gg = document.getElementById("plan").children[0].children[0];
     for(let j = 2; j<gg.cells.length; j++){
         planSum = planSum + Number(document.getElementById("plan").children[0].rows[0].cells[j].children[0].value);
@@ -32,16 +41,41 @@ function tester(n){
 }
 
 function addHysterRow(){
+    document.getElementById("hyster").children[0].children[0].setAttribute('id', "hr" + 0);
     let rowCount = document.getElementById("hyster").children[0].rows.length
     let columnCount = document.getElementById("hyster").children[0].rows[0].cells.length;
     let hysterRow = document.getElementById("hyster").children[0].children[0];
     let newHysterRow = hysterRow.cloneNode(true);
     document.getElementById("hyster").children[0].append(newHysterRow)
-    for(let i = 1; i<columnCount; i++){
-        document.getElementById("hyster").children[0].children[rowCount].children[i].children[0].value = null;
+
+    try {
+        for(let i = 0; i<columnCount; i++){
+            document.getElementById("hyster").children[0].children[rowCount].children[i].children[0].value = "";
+        }
+
+        for(let j = 1; j<=rowCount; j++){
+            document.getElementById("hyster").children[0].children[j].setAttribute('id', "hr"+j);
+            document.getElementById("hyster").children[0].children[j].children[columnCount-1].children[0].removeAttribute("hidden");
+        }
+    } catch (error) {
+        console.error(error);
     }
+
+    try {
+        for(let k = 1; k<=rowCount; k++){
+            document.getElementById("hr"+k).children[columnCount-1].children[0].setAttribute("onclick","removeHysterRow('"+k+"')")
+        }
+    }  catch (error) {
+        console.error(error);
+    }
+
 }
 
-function removeHysterRow(id){
 
+function removeHysterRow(id){
+    let elem = document.getElementById("hr"+id);
+    elem.remove();
+    for(let i = 2; i<35; i++){
+    tester(i);
+    }
 }
