@@ -42,8 +42,10 @@ function tester(n){
     if(document.getElementById("fact").children[0].rows[0].cells[n].innerHTML == 0){
         document.getElementById("fact").children[0].rows[0].cells[n].innerHTML = "-"
     }
-    let plan = document.getElementById("plan").children[0].rows[0].cells[n].children[0].value;
-    document.getElementById("diff").children[0].rows[0].cells[n].innerHTML = sum - Number(plan);
+    let plan = Number(document.getElementById("plan").children[0].rows[0].cells[n].children[0].value);
+    if(plan == plan){
+        document.getElementById("diff").children[0].rows[0].cells[n].innerHTML = sum - Number(plan);
+    } 
     if(document.getElementById("diff").children[0].rows[0].cells[n].innerHTML == 0){
         document.getElementById("diff").children[0].rows[0].cells[n].innerHTML = "-"
     }else if(document.getElementById("diff").children[0].rows[0].cells[n].innerText < 0){
