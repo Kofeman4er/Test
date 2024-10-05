@@ -41,6 +41,7 @@ function tester(n){
         document.getElementById("diff").children[0].rows[0].cells[n].style.color = "white"
     }else if(document.getElementById("diff").children[0].rows[0].cells[n].innerText > 0){
         document.getElementById("diff").children[0].rows[0].cells[n].style.backgroundColor = "#4FFFB0";
+        document.getElementById("diff").children[0].rows[0].cells[n].style.color = "black"
     }
     let gg = document.getElementById("plan").children[0].children[0];
     for(let j = 2; j<gg.cells.length; j++){
