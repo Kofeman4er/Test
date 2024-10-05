@@ -1,13 +1,5 @@
 const currentDate = new Date().toDateString();
 
-/*function sendMessage() {
-    document.getElementById("zone").innerHTML('<option value="6"></option>')
-    console.log(document.getElementById("zone"))
-    console.log(n)
-};*/
-//appendChild('<option value="7"></option>'
-
-
 function addName() {
     let inp = document.getElementById("nameinput").value
     document.getElementById("nameselector").insertAdjacentHTML('beforeend', '<option value="' + inp + '"></option>')
@@ -72,16 +64,6 @@ function addHysterRow(){
     document.getElementById("hyster").children[0].children[0].setAttribute('id', "hr" + 0);
     let rowCount = document.getElementById("hyster").children[0].rows.length
     let columnCount = document.getElementById("hyster").children[0].rows[0].cells.length;
-    /*let newHysterRow = document.createElement("tr");
-    newHysterRow.id = rowCount;
-
-    newHysterRow.innerHTML = 123123123;
-    let newHysterCell = document.createElement("td");
-    document.getElementById("hyster").children[0].append(newHysterRow)
-    //let newHysterCells = document.createElement("td");
-    for(let i = 0; i<35; i++){
-        document.getElementById("5").append(newHysterCell)
-    }*/
     let hysterRow = document.getElementById("hyster").children[0].children[0];
     let newHysterRow = hysterRow.cloneNode(true);
     document.getElementById("hyster").children[0].append(newHysterRow)
