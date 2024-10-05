@@ -22,7 +22,11 @@ function tester(n){
     let planSum = 0;
     let pp = document.getElementById("hyster").children[0]
     for(let i = 0; i<pp.rows.length; i++){
-            sum = sum + Number(document.getElementById("hyster").children[0].rows[i].cells[n].children[0].value);      
+            sum = sum + Number(document.getElementById("hyster").children[0].rows[i].cells[n].children[0].value);    
+    }
+    let btRoute = document.getElementById("bt").children[0]
+    for(let i = 0; i<btRoute.rows.length; i++){
+            sum = sum + Number(btRoute.rows[i].cells[n].children[0].value);    
     }
     document.getElementById("fact").children[0].rows[0].cells[n].innerHTML = sum;
     if(document.getElementById("fact").children[0].rows[0].cells[n].innerHTML == 0){
@@ -32,6 +36,11 @@ function tester(n){
     document.getElementById("diff").children[0].rows[0].cells[n].innerHTML = sum - Number(plan);
     if(document.getElementById("diff").children[0].rows[0].cells[n].innerHTML == 0){
         document.getElementById("diff").children[0].rows[0].cells[n].innerHTML = "-"
+    }else if(document.getElementById("diff").children[0].rows[0].cells[n].innerText < 0){
+        document.getElementById("diff").children[0].rows[0].cells[n].style.backgroundColor = "#E52B50";
+        document.getElementById("diff").children[0].rows[0].cells[n].style.color = "white"
+    }else if(document.getElementById("diff").children[0].rows[0].cells[n].innerText > 0){
+        document.getElementById("diff").children[0].rows[0].cells[n].style.backgroundColor = "#4FFFB0";
     }
     let gg = document.getElementById("plan").children[0].children[0];
     for(let j = 2; j<gg.cells.length; j++){
@@ -71,9 +80,47 @@ function addHysterRow(){
 
 }
 
-
 function removeHysterRow(id){
     let elem = document.getElementById("hr"+id);
+    elem.remove();
+    for(let i = 2; i<35; i++){
+    tester(i);
+    }
+}
+
+function addBTRow(){
+    document.getElementById("bt").children[0].children[0].setAttribute('id', "br" + 0);
+    let rowCount = document.getElementById("bt").children[0].rows.length
+    let columnCount = document.getElementById("bt").children[0].rows[0].cells.length;
+    let btRow = document.getElementById("bt").children[0].children[0];
+    let newBTRow = btRow.cloneNode(true);
+    document.getElementById("bt").children[0].append(newBTRow)
+
+    try {
+        for(let i = 0; i<columnCount; i++){
+            document.getElementById("bt").children[0].children[rowCount].children[i].children[0].value = "";
+        }
+
+        for(let j = 1; j<=rowCount; j++){
+            document.getElementById("bt").children[0].children[j].setAttribute('id', "br"+j);
+            document.getElementById("bt").children[0].children[j].children[columnCount-1].children[0].removeAttribute("hidden");
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
+    try {
+        for(let k = 1; k<=rowCount; k++){
+            document.getElementById("br"+k).children[columnCount-1].children[0].setAttribute("onclick","removeBTRow('"+k+"')")
+        }
+    }  catch (error) {
+        console.error(error);
+    }
+
+}
+
+function removeBTRow(id){
+    let elem = document.getElementById("br"+id);
     elem.remove();
     for(let i = 2; i<35; i++){
     tester(i);
