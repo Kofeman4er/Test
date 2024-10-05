@@ -57,7 +57,13 @@ function tester(n){
     }
     let gg = document.getElementById("plan").children[0].children[0];
     for(let j = 2; j<gg.cells.length; j++){
-        planSum = planSum + Number(document.getElementById("plan").children[0].rows[0].cells[j].children[0].value);
+        let t = Number(document.getElementById("plan").children[0].rows[0].cells[j].children[0].value);
+        if(t == t){
+            planSum = planSum + t
+        }else{
+           alert("Plan should be set as a number");
+           document.getElementById("plan").children[0].rows[0].cells[j].children[0].value = '';
+        }   
     }
     document.getElementById("plancount").innerHTML = planSum;
 }
