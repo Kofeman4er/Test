@@ -16,9 +16,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
 
         import {getDatabase, ref, child, get, set, update, remove} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-database.js";
         const db = getDatabase();
-        let ident = document.getElementById("todaysDate").innerHTML;
-        let zone = document.getElementById("uuu").children[0]; 
-        
+        let ident = document.getElementById("todaysDate").innerHTML;        
 
         function LoopData(){
             let countHyster = document.getElementById("hyster").children[0].rows.length
@@ -29,7 +27,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
             for(let i=0; i<countBT; i++){
                 AddData("br"+i);
             }
-            //AddData("pr0");
+            AddData("pr0");
             alert("data added succesfully"); 
         }
 
@@ -73,6 +71,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
                 employeedata: {Name: inputdata0, zonetype: inputdata1, d2: inputdata2, d3: inputdata3, d4: inputdata4, d5: inputdata5, d6: inputdata6, d7: inputdata7, d8: inputdata8, d9: inputdata9, d10: inputdata10, d11: inputdata11, d12: inputdata12, d13: inputdata13, d14: inputdata14, d15: inputdata15, d16: inputdata16, d17: inputdata17, d18: inputdata18, d19: inputdata19, d20: inputdata20, d21: inputdata21, d22: inputdata22, d23: inputdata23, d24: inputdata24, d25: inputdata25, d26: inputdata26, d27: inputdata27, d28: inputdata28, d29: inputdata29, d30: inputdata30, d31: inputdata31, d32: inputdata32, d33: inputdata33, d34: inputdata34}
                 }
             ).then(()=>{
+                //alert("data added succesfully");
             }).catch((error)=>{
                 alert("Fail")
                 console.log(error)
@@ -95,6 +94,21 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
                 }
             }
 
+            let columnBTCount = document.getElementById("bt").children[0].rows[0].cells.length;
+            let rowBTCount = document.getElementById("bt").children[0].rows.length;
+            if(rowBTCount>1){
+                try{
+                    for(let p = 1; p<rowBTCount; p++){
+                        document.getElementById("br" + p).remove();
+                    }
+                    for(let i = 0; i<columnBTCount; i++){
+                        document.getElementById("bt").children[0].children[0].children[i].children[0].value = "";
+                    }
+                }catch (error) {
+                    console.error(error);
+                }
+            }
+
             const dbRef = ref(db);
             let hCounter = 0;
             let bCounter = 0;
@@ -102,9 +116,10 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
             let tempDate = document.getElementById("loaddata").value
             get(child(dbRef, tempDate + "/")).then((snapshot)=>{
                 snapshot.forEach((child) => {
+                    //console.log(child.key); // "child1", "child2"
                     if(child.key.substring(0,2) == "hr"){
                         hCounter++
-                    }else if(child.key.substring(0,2) == "hb"){
+                    }else if(child.key.substring(0,2) == "br"){
                         bCounter++
                     }
                 });
@@ -112,6 +127,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
                 console.log("bCounter:" + bCounter)
                 
                 let hysterRow = document.getElementById("hyster").children[0].children[0];
+                let btRow = document.getElementById("bt").children[0].children[0];
                 
                 for(let i = 1; i<hCounter; i++){
                     let newHysterRow = hysterRow.cloneNode(true);
@@ -120,18 +136,39 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
                     RetData("hr"+i)
                 }
                 for(let i = 0; i<hCounter; i++){
+                    /*for(let j = 0; j < rowCount-1; j++){
+                        document.getElementById("hyster").children[0].children[j].children[i].children[0].setAttribute("disabled", true)
+                    }*/
                     RetData("hr"+i)
                 }
+                for(let i = 1; i<bCounter; i++){
+                    let newBTRow = btRow.cloneNode(true);
+                    document.getElementById("bt").children[0].append(newBTRow);
+                    document.getElementById("bt").children[0].children[i].setAttribute('id', "br"+i);
+                    RetData("br"+i)
+                }
+                for(let i = 0; i<bCounter; i++){
+                    RetData("br"+i)
+                }
+                RetData("pr0")
                 
             }).catch((error)=>{
                 alert("Fail")
                 console.log(error)
             })
+            
+            let nowDate = document.getElementById("todaysDate").innerText
+            if(tempDate == nowDate){
+                document.getElementById("savebutton").disabled = false
+            }else{
+                document.getElementById("savebutton").setAttribute("disabled", true)
+            }
         }
 
         function RetData(rowData){
             const dbRef = ref(db);
 
+            //let tempDate = "Sun Oct 06 2024"
             let tempDate = document.getElementById("loaddata").value
             get(child(dbRef, tempDate + "/"+ rowData +"/employeedata")).then((snapshot)=>{
                 if(snapshot.exists()){
