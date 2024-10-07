@@ -4,27 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script type = "text/javascript" src="main.js"></script>
+
     <title>Document</title>
 </head>
 <body>
     <div class = "main">
         <div class = "header">
             <div class = "dateheader">Date:</div>
-            <div class = "datenow"><p id = "qqq">MM:DD</p></div>
+            <div class = "datenow"><p id = "todaysDate">MM:DD</p></div>
             <div id = "plantotal">
                 <h4>Plan for today: </h4>
                 <p id = "plancount">--</p>
             </div>
-            <script>
-                document.getElementById("qqq").innerHTML = currentDate;
-            </script>
+            <div><input id = "loaddata"></div>
+            <div><button id = "loadbutton">Load</button></div>
+
         </div>
         <div class = "table">
             <div class = "datatable">
                 <div class = "v1">
                     <div class = "left">Type</div>
-                    <table class = "data">
+                    <table class = "data" id = "headerD">
                         <tr>
                             <td class = "name">Name</td>
                             <td class = "zones"><label>Choose zone:</label></td>
@@ -68,12 +68,12 @@
                 <div class = "v1">
                     <div class = "left" id = "hysterdiv">Hyster</div>
                     <table class = "data"  id = "hyster">
-                        <tr>
+                        <tr id = "hr0">
                             <td class = "name">
                                 <input list = "nameselector" name = "name" onclick='javascript: this.value = ""'>
                             </td>
-                            <td class = "zones">
-                                <input list="zoneselector" id="zone" name="zone" onclick='javascript: this.value = ""'> 
+                            <td class = "zones" id = "uuu">
+                                <input list="zoneselector" name="zone" onclick='javascript: this.value = ""'> 
                             </td>
                             <td><input onchange="tester(2)"></td>
                             <td><input onchange="tester(3)"></td>
@@ -125,7 +125,7 @@
                 <div class = "v1">
                     <div class = "left">BT</div>
                     <table class = "data" id = "bt">
-                        <tr>
+                        <tr id = "br0">
                             <td class = "name">
                                 <input list = "nameselector" name = "name" onclick='javascript: this.value = ""'>
                             </td>
@@ -173,9 +173,9 @@
                 <div class = "v1">
                     <div class = "left">Plan</div>
                     <table class = "data" id = "plan">
-                        <tr>
-                            <td class = "name plan"></td>
-                            <td class = "zones plan"></td>
+                        <tr id = "pr0">
+                            <td class = "name plan"><input hidden></td>
+                            <td class = "zones plan"><input hidden></td>
                             <td><input onchange="tester(2)"></td>
                             <td><input onchange="tester(3)"></td>
                             <td><input onchange="tester(4)"></td>
@@ -355,5 +355,10 @@
         </div>
     </div>
 
+    <script type="module" src = "firebase.js"></script>
+    <script type = "text/javascript" src="main.js"></script>
+    <script>
+        document.getElementById("todaysDate").innerHTML = currentDate;
+    </script>
 </body>
 </html>
