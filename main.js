@@ -1,3 +1,6 @@
+
+
+
 const currentDate = new Date().toDateString();
 
 function addName() {
@@ -69,7 +72,6 @@ function tester(n){
 }
 
 function addHysterRow(){
-    document.getElementById("hyster").children[0].children[0].setAttribute('id', "hr" + 0);
     let rowCount = document.getElementById("hyster").children[0].rows.length
     let columnCount = document.getElementById("hyster").children[0].rows[0].cells.length;
     let hysterRow = document.getElementById("hyster").children[0].children[0];
@@ -145,3 +147,5 @@ function removeBTRow(id){
     tester(i);
     }
 }
+
+
