@@ -116,15 +116,12 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
             let tempDate = document.getElementById("loaddata").value
             get(child(dbRef, tempDate + "/")).then((snapshot)=>{
                 snapshot.forEach((child) => {
-                    //console.log(child.key); // "child1", "child2"
                     if(child.key.substring(0,2) == "hr"){
                         hCounter++
                     }else if(child.key.substring(0,2) == "br"){
                         bCounter++
                     }
                 });
-                console.log("hCounter:" + hCounter)
-                console.log("bCounter:" + bCounter)
                 
                 let hysterRow = document.getElementById("hyster").children[0].children[0];
                 let btRow = document.getElementById("bt").children[0].children[0];
@@ -136,9 +133,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
                     RetData("hr"+i)
                 }
                 for(let i = 0; i<hCounter; i++){
-                    /*for(let j = 0; j < rowCount-1; j++){
-                        document.getElementById("hyster").children[0].children[j].children[i].children[0].setAttribute("disabled", true)
-                    }*/
                     RetData("hr"+i)
                 }
                 for(let i = 1; i<bCounter; i++){
@@ -221,5 +215,3 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
         addData.addEventListener('click', LoopData);
         let loadData = document.getElementById("loadbutton");
         loadData.addEventListener('click', GetCount);
-
-
