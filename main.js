@@ -1,6 +1,3 @@
-
-
-
 const currentDate = new Date().toDateString();
 
 function addName() {
