@@ -180,7 +180,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
             })
         }
 
-        let addData = document.getElementById("myBtn");
+        let addData = document.getElementById("savebutton");
         addData.addEventListener('click', LoopData);
         let loadData = document.getElementById("loadbutton");
         loadData.addEventListener('click', GetCount);
