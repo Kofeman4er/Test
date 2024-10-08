@@ -108,7 +108,7 @@
                             <td><input onchange="tester(32)"></td>
                             <td><input onchange="tester(33)"></td>
                             <td><input onchange="tester(34)"></td> 
-                            <td class = "zones plan"><button type="button" onclick="removeHysterRow('0')" hidden>-</button></td>                
+                            <td class = "zones plan"><button type="button" onclick="removeHysterRow('0')" hidden class = "removeRowButton">-</button></td>                
                         </tr>
                         <datalist id="zoneselector" >
                             <option value="4"></option>
@@ -120,7 +120,7 @@
                     </table>
                 </div>
                 <div>
-                    <button type="button" onclick="addHysterRow()">+</button>
+                    <button type="button" onclick="addHysterRow()" id = "addHysterRowButton" class = "addRowButton">+</button>
                 </div>
                 <div class = "v1">
                     <div class = "left">BT</div>
@@ -163,12 +163,12 @@
                             <td><input onchange="tester(32)"></td>
                             <td><input onchange="tester(33)"></td>
                             <td><input onchange="tester(34)"></td> 
-                            <td class = "zones plan"><button type="button" onclick="removeHysterRow('0')" hidden>-</button></td>                      
+                            <td class = "zones plan"><button type="button" onclick="removeHysterRow('0')" hidden class = "removeRowButton">-</button></td>                      
                         </tr>
                     </table>
                 </div>
                 <div>
-                    <button type="button" onclick="addBTRow()">+</button>
+                    <button type="button" onclick="addBTRow()" id = "addBTRowRowButton" class = "addRowButton">+</button>
                 </div>
                 <div class = "v1">
                     <div class = "left">Plan</div>
