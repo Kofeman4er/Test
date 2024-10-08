@@ -123,38 +123,35 @@ td{
     border: none;
     cursor: pointer;
   }
-  
-  /* Dropdown button on hover & focus */
-  .dropbtn:hover, .dropbtn:focus {
-    background-color: rgb(249, 212, 0);
-  }
-  
-  /* The container <div> - needed to position the dropdown content */
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-  
-  /* Dropdown Content (Hidden by Default) */
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  /* Links inside the dropdown */
-  .dropdown-content a {
+
+.addRowButton {
+    border-radius: 0px;
+    background-color: rgb(194, 240, 193);
+    transition: all 0.4s ease;
+    border: 1px solid white;
+}
+
+.addRowButton:hover {
+    background-color: rgb(112, 244, 110);
     color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  /* Change color of dropdown links on hover */
-  .dropdown-content a:hover {background-color: #ddd;}
-  
-  /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-  .show {display:block;}
+}
+
+.addRowButton:active {
+    color: black;
+}
+
+.removeRowButton {
+    border-radius: 0px;
+    background-color: rgb(240, 193, 193);
+    transition: all 0.4s ease;
+    border: 1px solid white;
+}
+
+.removeRowButton:hover {
+    background-color: rgb(244, 110, 110);
+    color: black;
+}
+
+.removeRowButton:active {
+    color: black;
+}
