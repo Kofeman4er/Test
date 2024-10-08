@@ -12,7 +12,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
       
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        console.log("Yes")
+        console.log("Connected to DB")
 
         import {getDatabase, ref, child, get, set, update, remove} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-database.js";
         const db = getDatabase();
@@ -153,10 +153,28 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
             
             let nowDate = document.getElementById("todaysDate").innerText
             if(tempDate == nowDate){
-                document.getElementById("savebutton").disabled = false
+                document.getElementById("savebutton").disabled = false;
+                for(let r = 0; r<columnCount-1; r++){
+                    document.getElementById("hyster").children[0].children[0].children[r].children[0].disabled = false
+                    document.getElementById("bt").children[0].children[0].children[r].children[0].disabled = false
+                    document.getElementById("plan").children[0].children[0].children[r].children[0].disabled = false
+                    document.getElementById("addBTRowRowButton").disabled = false
+                    document.getElementById("addHysterRowButton").disabled = false
+                    document.getElementById("myBtn").disabled = false
+                }
             }else{
-                document.getElementById("savebutton").setAttribute("disabled", true)
+                document.getElementById("savebutton").setAttribute("disabled", true);
+                for(let r = 0; r<columnCount-1; r++){
+                    document.getElementById("hyster").children[0].children[0].children[r].children[0].setAttribute("disabled", true)
+                    document.getElementById("bt").children[0].children[0].children[r].children[0].setAttribute("disabled", true)
+                    document.getElementById("plan").children[0].children[0].children[r].children[0].setAttribute("disabled", true)
+                    document.getElementById("addBTRowRowButton").setAttribute("disabled", true)
+                    document.getElementById("addHysterRowButton").setAttribute("disabled", true)
+                    document.getElementById("myBtn").setAttribute("disabled", true)
+                }
+                
             }
+
         }
 
         function RetData(rowData){
@@ -202,8 +220,10 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
                     document.getElementById(rowData).children[32].children[0].value = snapshot.val().d32;
                     document.getElementById(rowData).children[33].children[0].value = snapshot.val().d33;
                     document.getElementById(rowData).children[34].children[0].value = snapshot.val().d34;
+                    countFactDiff();
                 }else{
-                    alert("smth went wrong")
+                    alert("Data for this day does not exist")
+                    location.reload()
                 }
             }).catch((error)=>{
                 alert("Fail")
@@ -211,7 +231,75 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
             })
         }
 
+        function countFactDiff(){
+            let rowLength = document.getElementById("plan").children[0].rows[0].cells.length;
+            for(let i = 2; i<rowLength; i++){
+                counter(i);
+                
+            }
+            
+        }
+
+        function counter(n){
+            let sum = 0;
+            let planSum = 0;
+            let pp = document.getElementById("hyster").children[0]
+            for(let i = 0; i<pp.rows.length; i++){
+                let t = Number(document.getElementById("hyster").children[0].rows[i].cells[n].children[0].value)
+                    if(t == t){
+                        sum = Number(sum) + t
+                    }else{
+                        i++;
+                    }
+            }
+            let btRoute = document.getElementById("bt").children[0]
+            for(let i = 0; i<btRoute.rows.length; i++){
+                let t = Number(document.getElementById("bt").children[0].rows[i].cells[n].children[0].value)
+                if(t == t){
+                    sum = Number(sum) + t
+                }else{
+                    i++;
+                }   
+            }
+            document.getElementById("fact").children[0].rows[0].cells[n].innerHTML = sum;
+            if(document.getElementById("fact").children[0].rows[0].cells[n].innerHTML == 0){
+                document.getElementById("fact").children[0].rows[0].cells[n].innerHTML = "-"
+            }
+            let plan = Number(document.getElementById("plan").children[0].rows[0].cells[n].children[0].value);
+            if(plan == plan){
+                document.getElementById("diff").children[0].rows[0].cells[n].innerHTML = sum - Number(plan);
+            } 
+            if(document.getElementById("diff").children[0].rows[0].cells[n].innerHTML == 0){
+                document.getElementById("diff").children[0].rows[0].cells[n].innerHTML = "-"
+            }else if(document.getElementById("diff").children[0].rows[0].cells[n].innerText < 0){
+                document.getElementById("diff").children[0].rows[0].cells[n].style.backgroundColor = "#E52B50";
+                document.getElementById("diff").children[0].rows[0].cells[n].style.color = "white"
+            }else if(document.getElementById("diff").children[0].rows[0].cells[n].innerText > 0){
+                document.getElementById("diff").children[0].rows[0].cells[n].style.backgroundColor = "#4FFFB0";
+                document.getElementById("diff").children[0].rows[0].cells[n].style.color = "black"
+            }
+            let gg = document.getElementById("plan").children[0].children[0];
+            for(let j = 2; j<gg.cells.length; j++){
+                let t = Number(document.getElementById("plan").children[0].rows[0].cells[j].children[0].value);
+                if(t == t){
+                    planSum = planSum + t
+                }else{
+                   alert("Plan should be set as a number");
+                   document.getElementById("plan").children[0].rows[0].cells[j].children[0].value = '';
+                }   
+            }
+            document.getElementById("plancount").innerHTML = planSum;
+
+        }
+
         let addData = document.getElementById("savebutton");
         addData.addEventListener('click', LoopData);
+
         let loadData = document.getElementById("loadbutton");
         loadData.addEventListener('click', GetCount);
+
+
+
+
+
+
