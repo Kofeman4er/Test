@@ -1,7 +1,19 @@
+    let objectDate = new Date();
+    let day = objectDate.getDate();
+    let year = objectDate.getFullYear();
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May","Jun","Jul", "Aug", "Sep", "Oct", "Nov","Dec"];
+    let month = monthNames[objectDate.getMonth()];
+    let month2 = objectDate.getMonth();
 
-
-
-const currentDate = new Date().toDateString();
+    if (day < 10) {
+        day = '0' + day;
+    }
+    if (month2+1 < 10) {
+        month2 = '0' + month2;
+    }
+    
+    let formatDate = `${month} ${day} ${year}`;
+    let forMatch = `${year}-${month2+1}-${day}`
 
 function addName() {
     let inp = document.getElementById("nameinput").value
