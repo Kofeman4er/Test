@@ -16,7 +16,15 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
 
         import {getDatabase, ref, child, get, set, update, remove} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-database.js";
         const db = getDatabase();
-        let ident = document.getElementById("todaysDate").innerHTML;        
+        let day = objectDate.getDate();
+        let year = objectDate.getFullYear();
+        let month2 = objectDate.getMonth();
+
+        if (day < 10) {
+            day = '0' + day;
+        }
+        let forMatch = `${year}-${month2+1}-${day}`
+        //let ident = document.getElementById("todaysDate").innerHTML;        
 
         function LoopData(){
             let countHyster = document.getElementById("hyster").children[0].rows.length
@@ -67,7 +75,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
             let inputdata32 = document.getElementById(rowData).children[32].children[0].value;
             let inputdata33 = document.getElementById(rowData).children[33].children[0].value;
             let inputdata34 = document.getElementById(rowData).children[34].children[0].value;
-            set(ref(db, ident + "/" + rowData),{
+            set(ref(db, forMatch + "/" + rowData),{
                 employeedata: {Name: inputdata0, zonetype: inputdata1, d2: inputdata2, d3: inputdata3, d4: inputdata4, d5: inputdata5, d6: inputdata6, d7: inputdata7, d8: inputdata8, d9: inputdata9, d10: inputdata10, d11: inputdata11, d12: inputdata12, d13: inputdata13, d14: inputdata14, d15: inputdata15, d16: inputdata16, d17: inputdata17, d18: inputdata18, d19: inputdata19, d20: inputdata20, d21: inputdata21, d22: inputdata22, d23: inputdata23, d24: inputdata24, d25: inputdata25, d26: inputdata26, d27: inputdata27, d28: inputdata28, d29: inputdata29, d30: inputdata30, d31: inputdata31, d32: inputdata32, d33: inputdata33, d34: inputdata34}
                 }
             ).then(()=>{
@@ -116,6 +124,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
             let tempDate = document.getElementById("loaddata").value
             get(child(dbRef, tempDate + "/")).then((snapshot)=>{
                 snapshot.forEach((child) => {
+                    //console.log(child.key); // "child1", "child2"
                     if(child.key.substring(0,2) == "hr"){
                         hCounter++
                     }else if(child.key.substring(0,2) == "br"){
@@ -150,9 +159,18 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
                 alert("Fail")
                 console.log(error)
             })
+
+            let day = objectDate.getDate();
+            let year = objectDate.getFullYear();
+            let month2 = objectDate.getMonth();
+
+            if (day < 10) {
+                day = '0' + day;
+            }
+            let forMatch = `${year}-${month2+1}-${day}`
             
-            let nowDate = document.getElementById("todaysDate").innerText
-            if(tempDate == nowDate){
+            //let nowDate = document.getElementById("todaysDate").innerText
+            if(tempDate == forMatch){
                 document.getElementById("savebutton").disabled = false;
                 for(let r = 0; r<columnCount-1; r++){
                     document.getElementById("hyster").children[0].children[0].children[r].children[0].disabled = false
