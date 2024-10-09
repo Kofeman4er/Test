@@ -10,13 +10,13 @@
 <body>
     <div class = "main">
         <div class = "header">
-            <div class = "dateheader">Date:</div>
+            <div class = "dateheader">Today:</div>
             <div class = "datenow"><p id = "todaysDate">MM:DD</p></div>
             <div id = "plantotal">
                 <h4>Plan for today: </h4>
                 <p id = "plancount">--</p>
             </div>
-            <div><input id = "loaddata"></div>
+            <div><input id = "loaddata" type = "date" value = "2024-11-09"></div>
             <div><button id = "loadbutton">Load</button></div>
             <div><button id = "savebutton">Save</button></div>
         </div>
@@ -358,7 +358,7 @@
     <script type="module" src = "firebase.js"></script>
     <script type = "text/javascript" src="main.js"></script>
     <script>
-        document.getElementById("todaysDate").innerHTML = currentDate;
+        document.getElementById("todaysDate").innerHTML = formatDate;
     </script>
 </body>
 </html>
