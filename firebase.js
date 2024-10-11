@@ -24,9 +24,25 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
             day = '0' + day;
         }
         let forMatch = `${year}-${month2+1}-${day}`
-        //let ident = document.getElementById("todaysDate").innerHTML;        
+
+        function rowNewIndexes(){
+            let rowHCount = document.getElementById("hyster").children[0].rows.length
+            let rowBCount = document.getElementById("bt").children[0].rows.length
+            try {       
+                for(let j = 1; j<rowHCount; j++){
+                    document.getElementById("hyster").children[0].children[j].setAttribute('id', "hr"+j);
+                }
+                for(let f = 1; f<rowBCount; f++){
+                    document.getElementById("bt").children[0].children[f].setAttribute('id', "br"+f);                
+                }
+            } catch (error) {
+                console.error(error);
+            }
+            LoopData()
+        }
 
         function LoopData(){
+            deleteData()
             let countHyster = document.getElementById("hyster").children[0].rows.length
             let countBT = document.getElementById("bt").children[0].rows.length
             for(let i=0; i<countHyster; i++){
@@ -202,7 +218,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
             let tempDate = document.getElementById("loaddata").value
             get(child(dbRef, tempDate + "/"+ rowData +"/employeedata")).then((snapshot)=>{
                 if(snapshot.exists()){
-                    console.log(snapshot.val())
+                    //console.log(snapshot.val())
                     document.getElementById(rowData).children[0].children[0].value = snapshot.val().Name;
                     document.getElementById(rowData).children[1].children[0].value = snapshot.val().zonetype;
                     document.getElementById(rowData).children[2].children[0].value = snapshot.val().d2;
@@ -252,8 +268,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
         function countFactDiff(){
             let rowLength = document.getElementById("plan").children[0].rows[0].cells.length;
             for(let i = 2; i<rowLength; i++){
-                counter(i);
-                
+                counter(i);              
             }
             
         }
@@ -310,8 +325,20 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
 
         }
 
+        function deleteData(){
+            const dbRef = ref(db);
+            let tempDate = document.getElementById("loaddata").value
+            remove(child(dbRef, tempDate + "/"))
+            .then(()=>{
+                //alert("data deleted succesfully");
+            }).catch((error)=>{
+                alert("Fail to delete")
+                console.log(error)
+            })
+        }
+
         let addData = document.getElementById("savebutton");
-        addData.addEventListener('click', LoopData);
+        addData.addEventListener('click', rowNewIndexes);
 
         let loadData = document.getElementById("loadbutton");
         loadData.addEventListener('click', GetCount);
