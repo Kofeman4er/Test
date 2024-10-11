@@ -116,7 +116,7 @@ function addHysterRow(){
 function removeHysterRow(id){
     let elem = document.getElementById("hr"+id);
     elem.remove();
-    for(let i = 2; i<35; i++){
+    for(let i = 2; i<35; i++){  //todo
     tester(i);
     }
 }
