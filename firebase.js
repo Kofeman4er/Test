@@ -303,7 +303,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
                 document.getElementById("diff").children[0].rows[0].cells[n].innerHTML = sum - Number(plan);
             } 
             if(document.getElementById("diff").children[0].rows[0].cells[n].innerHTML == 0){
-                document.getElementById("diff").children[0].rows[0].cells[n].innerHTML = "-"
+                document.getElementById("diff").children[0].rows[0].cells[n].innerHTML = "-";
+                document.getElementById("diff").children[0].rows[0].cells[n].style.backgroundColor = "beige";
             }else if(document.getElementById("diff").children[0].rows[0].cells[n].innerText < 0){
                 document.getElementById("diff").children[0].rows[0].cells[n].style.backgroundColor = "#E52B50";
                 document.getElementById("diff").children[0].rows[0].cells[n].style.color = "white"
