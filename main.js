@@ -15,6 +15,10 @@
     let formatDate = `${month} ${day} ${year}`;
     let forMatch = `${year}-${month2+1}-${day}`
 
+    let page = 0;
+    let tableEnabled = false;
+    let homePageEnabled = false;
+
 function addName() {
     let inp = document.getElementById("nameinput").value
     document.getElementById("nameselector").insertAdjacentHTML('beforeend', '<option value="' + inp + '"></option>')
