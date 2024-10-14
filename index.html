@@ -6,359 +6,49 @@
     <link rel="stylesheet" href="style.css">
 
     <title>Document</title>
+    <script type = "text/javascript" src="main3.js"></script>
+    <script type = "text/javascript" src="main.js"></script>
 </head>
 <body>
-    <div class = "main">
-        <div class = "header">
-            <div class = "dateheader">Today:</div>
-            <div class = "datenow"><p id = "todaysDate">MM:DD</p></div>
-            <div id = "plantotal">
-                <h4>Plan for today: </h4>
-                <p id = "plancount">--</p>
-            </div>
-            <div><input id = "loaddata" type = "date"></div>
-            <div><button id = "loadbutton">Load</button></div>
-            <div><button id = "savebutton">Save</button></div>
-        </div>
-        <div class = "table">
-            <div class = "datatable">
-                <div class = "v1">
-                    <div class = "left">Type</div>
-                    <table class = "data" id = "headerD">
-                        <tr>
-                            <td class = "name">Name</td>
-                            <td class = "zones"><label>Choose zone:</label></td>
-                            <td>6:00-6:15</td>
-                            <td>6:15-6:30</td>
-                            <td>6:30-6:45</td>
-                            <td>6:45-7:00</td>
-                            <td>7:00-7:15</td>
-                            <td>7:15-7:30</td>
-                            <td>7:30-7:45</td>
-                            <td>7:45-8:00</td>
-                            <td>8:00-8:15</td>
-                            <td>8:15-8:30</td>
-                            <td>8:30-8:45</td>
-                            <td>8:45-9:00</td>
-                            <td>9:00-9:15</td>
-                            <td>9:15-9:30</td>
-                            <td>9:30-9:45</td>
-                            <td>9:45-10:00</td>
-                            <td>10:00-10:15</td>
-                            <td>10:15-10:30</td>
-                            <td>10:30-10:45</td>
-                            <td>10:45-11:00</td>
-                            <td>11:00-11:15</td>
-                            <td>11:15-11:30</td>
-                            <td>11:30-11:45</td>
-                            <td>11:45-12:00</td>
-                            <td>12:00-12:15</td>
-                            <td>12:15-12:30</td>
-                            <td>12:30-12:45</td>
-                            <td>12:45-13:00</td>
-                            <td>13:00-13:15</td>
-                            <td>13:15-13:30</td>
-                            <td>13:30-13:45</td>
-                            <td>13:45-14:00</td>
-                            <td>14:00-14:15</td>  
-                            <td class = "zones plan"></td>                    
-                        </tr>
-                    </table>
-                </div>
-                <div class = "v1">
-                    <div class = "left" id = "hysterdiv">Hyster</div>
-                    <table class = "data"  id = "hyster">
-                        <tr id = "hr0">
-                            <td class = "name">
-                                <input list = "nameselector" name = "name" onclick='javascript: this.value = ""'>
-                            </td>
-                            <td class = "zones" id = "uuu">
-                                <input list="zoneselector" name="zone" onclick='javascript: this.value = ""'> 
-                            </td>
-                            <td><input onchange="tester(2)"></td>
-                            <td><input onchange="tester(3)"></td>
-                            <td><input onchange="tester(4)"></td>
-                            <td><input onchange="tester(5)"></td>
-                            <td><input onchange="tester(6)"></td>
-                            <td><input onchange="tester(7)"></td>
-                            <td><input onchange="tester(8)"></td>
-                            <td><input onchange="tester(9)"></td>
-                            <td><input onchange="tester(10)"></td>
-                            <td><input onchange="tester(11)"></td>
-                            <td><input onchange="tester(12)"></td>
-                            <td><input onchange="tester(13)"></td>
-                            <td><input onchange="tester(14)"></td>
-                            <td><input onchange="tester(15)"></td>
-                            <td><input onchange="tester(16)"></td>
-                            <td><input onchange="tester(17)"></td>
-                            <td><input onchange="tester(18)"></td>
-                            <td><input onchange="tester(19)"></td>
-                            <td><input onchange="tester(20)"></td>
-                            <td><input onchange="tester(21)"></td>
-                            <td><input onchange="tester(22)"></td>
-                            <td><input onchange="tester(23)"></td>
-                            <td><input onchange="tester(24)"></td>
-                            <td><input onchange="tester(25)"></td>
-                            <td><input onchange="tester(26)"></td>
-                            <td><input onchange="tester(27)"></td>
-                            <td><input onchange="tester(28)"></td>
-                            <td><input onchange="tester(29)"></td>
-                            <td><input onchange="tester(30)"></td>
-                            <td><input onchange="tester(31)"></td>
-                            <td><input onchange="tester(32)"></td>
-                            <td><input onchange="tester(33)"></td>
-                            <td><input onchange="tester(34)"></td> 
-                            <td class = "zones plan"><button type="button" onclick="removeHysterRow('0')" hidden class = "removeRowButton">-</button></td>                
-                        </tr>
-                        <datalist id="zoneselector" >
-                            <option value="4"></option>
-                            <option value="6"></option>
-                        </datalist>
-                        <datalist id="nameselector" >
-                            <option value="test"></option>
-                        </datalist>
-                    </table>
-                </div>
-                <div>
-                    <button type="button" onclick="addHysterRow()" id = "addHysterRowButton" class = "addRowButton">+</button>
-                </div>
-                <div class = "v1">
-                    <div class = "left">BT</div>
-                    <table class = "data" id = "bt">
-                        <tr id = "br0">
-                            <td class = "name">
-                                <input list = "nameselector" name = "name" onclick='javascript: this.value = ""'>
-                            </td>
-                            <td class = "zones plan"><input hidden></td>
-                            <td><input onchange="tester(2)"></td>
-                            <td><input onchange="tester(3)"></td>
-                            <td><input onchange="tester(4)"></td>
-                            <td><input onchange="tester(5)"></td>
-                            <td><input onchange="tester(6)"></td>
-                            <td><input onchange="tester(7)"></td>
-                            <td><input onchange="tester(8)"></td>
-                            <td><input onchange="tester(9)"></td>
-                            <td><input onchange="tester(10)"></td>
-                            <td><input onchange="tester(11)"></td>
-                            <td><input onchange="tester(12)"></td>
-                            <td><input onchange="tester(13)"></td>
-                            <td><input onchange="tester(14)"></td>
-                            <td><input onchange="tester(15)"></td>
-                            <td><input onchange="tester(16)"></td>
-                            <td><input onchange="tester(17)"></td>
-                            <td><input onchange="tester(18)"></td>
-                            <td><input onchange="tester(19)"></td>
-                            <td><input onchange="tester(20)"></td>
-                            <td><input onchange="tester(21)"></td>
-                            <td><input onchange="tester(22)"></td>
-                            <td><input onchange="tester(23)"></td>
-                            <td><input onchange="tester(24)"></td>
-                            <td><input onchange="tester(25)"></td>
-                            <td><input onchange="tester(26)"></td>
-                            <td><input onchange="tester(27)"></td>
-                            <td><input onchange="tester(28)"></td>
-                            <td><input onchange="tester(29)"></td>
-                            <td><input onchange="tester(30)"></td>
-                            <td><input onchange="tester(31)"></td>
-                            <td><input onchange="tester(32)"></td>
-                            <td><input onchange="tester(33)"></td>
-                            <td><input onchange="tester(34)"></td> 
-                            <td class = "zones plan"><button type="button" onclick="removeHysterRow('0')" hidden class = "removeRowButton">-</button></td>                      
-                        </tr>
-                    </table>
-                </div>
-                <div>
-                    <button type="button" onclick="addBTRow()" id = "addBTRowRowButton" class = "addRowButton">+</button>
-                </div>
-                <div class = "v1">
-                    <div class = "left">Plan</div>
-                    <table class = "data" id = "plan">
-                        <tr id = "pr0">
-                            <td class = "name plan"><input hidden></td>
-                            <td class = "zones plan"><input hidden></td>
-                            <td><input onchange="tester(2)"></td>
-                            <td><input onchange="tester(3)"></td>
-                            <td><input onchange="tester(4)"></td>
-                            <td><input onchange="tester(5)"></td>
-                            <td><input onchange="tester(6)"></td>
-                            <td><input onchange="tester(7)"></td>
-                            <td><input onchange="tester(8)"></td>
-                            <td><input onchange="tester(9)"></td>
-                            <td><input onchange="tester(10)"></td>
-                            <td><input onchange="tester(11)"></td>
-                            <td><input onchange="tester(12)"></td>
-                            <td><input onchange="tester(13)"></td>
-                            <td><input onchange="tester(14)"></td>
-                            <td><input onchange="tester(15)"></td>
-                            <td><input onchange="tester(16)"></td>
-                            <td><input onchange="tester(17)"></td>
-                            <td><input onchange="tester(18)"></td>
-                            <td><input onchange="tester(19)"></td>
-                            <td><input onchange="tester(20)"></td>
-                            <td><input onchange="tester(21)"></td>
-                            <td><input onchange="tester(22)"></td>
-                            <td><input onchange="tester(23)"></td>
-                            <td><input onchange="tester(24)"></td>
-                            <td><input onchange="tester(25)"></td>
-                            <td><input onchange="tester(26)"></td>
-                            <td><input onchange="tester(27)"></td>
-                            <td><input onchange="tester(28)"></td>
-                            <td><input onchange="tester(29)"></td>
-                            <td><input onchange="tester(30)"></td>
-                            <td><input onchange="tester(31)"></td>
-                            <td><input onchange="tester(32)"></td>
-                            <td><input onchange="tester(33)"></td>
-                            <td><input onchange="tester(34)"></td>                      
-                        </tr>
-                    </table>
-                </div>
-                <div class = "v1">
-                    <div class = "left">Fact</div>
-                    <table class = "data" id = "fact">
-                        <tr>
-                            <td class = "name plan"></td>
-                            <td class = "zones plan"></td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>                      
-                        </tr>
-                    </table>
-                </div>
-                <div class = "v1">
-                    <div class = "left">Diff</div>
-                    <table class = "data" id = "diff">
-                        <tr>
-                            <td class = "name plan"></td>
-                            <td class = "zones plan"></td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>                      
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class = "footer">
-            <div>
-                <div class = "v1">
-                    <div class = "left">Buffer</div>
-                    <table class = "buffer">
-                        <tr class = "buff">
-                            <td>z6: 1</td>
-                            <td>z6: 2</td>
-                            <td>z6: 3</td>
-                            <td>z6: 4</td>
-                            <td>z6: 5</td>
-                            <td>z6: overflow</td>
-                            <td>z4: 1</td>
-                            <td>z4: 2</td>
-                            <td>z4: 3</td>
-                            <td>z4: 4</td>
-                            <td>z4: 5</td>
-                            <td>z4: overflow</td>                    
-                        </tr>
-                    </table>
-                </div>
-                <div class = "v1">
-                    <div class = "left">Date</div>
-                    <table class = "bufferDate">
-                        <tr class = "buff">
-                            <td><input></td>
-                            <td><input></td>
-                            <td><input></td>
-                            <td><input></td>
-                            <td><input></td>
-                            <td><input></td>
-                            <td><input></td>
-                            <td><input></td>
-                            <td><input></td>
-                            <td><input></td>
-                            <td><input></td>
-                            <td><input></td>                     
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class = "input">
-            <div>
-                <h4 id = "addworkers">Add workers for today: </h4>
-                <div class = "inputform">
-                    <input id = "nameinput">
-                    <button type="button" onclick="addName()" id="myBtn">Add to the shift</button>
-                </div>
-                
-            </div>
-        </div>
-        <div id = "workingtoday">
-            <p>Working today: </p>
-        </div>
+    <div class="topnav" id = "topnav">
+        <a class="active" onclick="loadHomePage()">Home</a>
+        <button onclick="document.getElementById('id01').style.display='block'" id = "loginNav">Login</button>
+        <button onclick="confirmation()" id = "loginNav2" style="display: none;">Logout</button>
+    </div>
+    <div id = "changable">
+        <div id = "mainDiv" style="display: none;"></div>
+        <div id = "newId" style="display: none;"></div>
     </div>
 
-    <script type="module" src = "firebase.js"></script>
-    <script type = "text/javascript" src="main.js"></script>
+    <div id="id01" class="modal">  
+        <!-- Modal Content -->
+        <div class="modal-content animate" method="post">
+          <div class="container">
+            <label for="uname"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="uname" id = "loginName" required>
+      
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" id = "loginPass" required>
+      
+            <button class = "submit" type="submit" onclick="checkCredentials()">Login</button>
+          </div>
+      
+          <div class="container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+          </div>
+        </div>
+    </div>
     <script>
-        document.getElementById("todaysDate").innerHTML = formatDate;
+        // Get the modal
+        var modal = document.getElementById('id01');
+        
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
     </script>
+    
 </body>
 </html>
