@@ -256,8 +256,21 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
                     document.getElementById(rowData).children[34].children[0].value = snapshot.val().d34;
                     countFactDiff();
                 }else{
+                    let rowCount = 0;
+                    let columnCount = document.getElementById("hyster").children[0].rows[0].cells.length;
+                    for(let i = 0; i<columnCount; i++){
+                        document.getElementById("hyster").children[0].children[rowCount].children[i].children[0].value = "";
+                        document.getElementById("bt").children[0].children[rowCount].children[i].children[0].value = "";
+                    }
+                    for(let j = 2; j<columnCount-1; j++){
+                        document.getElementById("plan").children[0].children[rowCount].children[j].children[0].value = "";
+                        document.getElementById("fact").children[0].rows[0].cells[j].innerHTML = "-"
+                        document.getElementById("diff").children[0].rows[0].cells[j].innerHTML = "-";
+                        document.getElementById("diff").children[0].rows[0].cells[j].style.backgroundColor = "beige";
+                    }
+
+                    document.querySelector("#plancount").innerHTML = "--"
                     alert("Data for this day does not exist")
-                    location.reload()
                 }
             }).catch((error)=>{
                 alert("Fail")
