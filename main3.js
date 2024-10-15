@@ -651,6 +651,7 @@ function checkCredentials(){
     if(inputName == "User" && inputPass == "1111"){
         let saag = document.createElement("button")
         saag.id = "saag"
+        saag.className = "navButton"
         saag.innerHTML = "S.a.a.G board";
         saag.onclick = createSaagMachineBoard;
         let loginNav = document.getElementById("loginNav");
