@@ -10,11 +10,11 @@
     <script type = "text/javascript" src="main.js"></script>
 </head>
 <body>
-    <div class="topnav" id = "topnav">
-        <a class="active" onclick="loadHomePage()">Home</a>
-        <button onclick="document.getElementById('id01').style.display='block'" id = "loginNav">Login</button>
-        <button onclick="confirmation()" id = "loginNav2" style="display: none;">Logout</button>
-    </div>
+    <nav class="mask" id = "topnav">
+        <button class="navButton" onclick="loadHomePage()">Home</button>
+        <button class="navButton loginNav" onclick="document.getElementById('id01').style.display='block'" id = "loginNav">Login</button>
+        <button class="navButton loginNav" onclick="confirmation()" id = "loginNav2" style="display: none;">Logout</button>
+    </nav>
     <div id = "changable">
         <div id = "mainDiv" style="display: none;"></div>
         <div id = "newId" style="display: none;"></div>
