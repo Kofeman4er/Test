@@ -67,7 +67,7 @@ function tester(n){
     } 
     if(document.getElementById("diff").children[0].rows[0].cells[n].innerHTML == 0){
         document.getElementById("diff").children[0].rows[0].cells[n].innerHTML = "-";
-        document.getElementById("diff").children[0].rows[0].cells[n].style.backgroundColor = "beige";
+        document.getElementById("diff").children[0].rows[0].cells[n].style.backgroundColor = "white";
     }else if(document.getElementById("diff").children[0].rows[0].cells[n].innerText < 0){
         document.getElementById("diff").children[0].rows[0].cells[n].style.backgroundColor = "#E52B50";
         document.getElementById("diff").children[0].rows[0].cells[n].style.color = "white"
