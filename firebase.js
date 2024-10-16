@@ -53,6 +53,28 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
             }
             AddData("pr0");
             alert("data added succesfully"); 
+
+            let zonesDates0 = document.getElementById("bufferDateTr").children[0].children[0].value;
+            let zonesDates1 = document.getElementById("bufferDateTr").children[1].children[0].value;
+            let zonesDates2 = document.getElementById("bufferDateTr").children[2].children[0].value;
+            let zonesDates3 = document.getElementById("bufferDateTr").children[3].children[0].value;
+            let zonesDates4 = document.getElementById("bufferDateTr").children[4].children[0].value;
+            let zonesDates5 = document.getElementById("bufferDateTr").children[5].children[0].value;
+            let zonesDates6 = document.getElementById("bufferDateTr").children[6].children[0].value;
+            let zonesDates7 = document.getElementById("bufferDateTr").children[7].children[0].value;
+            let zonesDates8 = document.getElementById("bufferDateTr").children[8].children[0].value;
+            let zonesDates9 = document.getElementById("bufferDateTr").children[9].children[0].value;
+            let zonesDates10 = document.getElementById("bufferDateTr").children[10].children[0].value;
+            let zonesDates11 = document.getElementById("bufferDateTr").children[11].children[0].value;
+            set(ref(db, forMatch + "/zones"),{
+                zonesdata: {z6_1: zonesDates0, z6_2: zonesDates1, z6_3: zonesDates2, z6_4: zonesDates3, z6_5: zonesDates4, z6_o: zonesDates5, z4_1: zonesDates6, z4_2: zonesDates7, z4_3: zonesDates8, z4_4: zonesDates9, z4_5: zonesDates10, z4_o: zonesDates11}
+                }
+            ).then(()=>{
+                //alert("data added succesfully");
+            }).catch((error)=>{
+                alert("Fail")
+                console.log(error)
+            })
         }
 
         function AddData(rowData){
@@ -91,8 +113,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
             let inputdata32 = document.getElementById(rowData).children[32].children[0].value;
             let inputdata33 = document.getElementById(rowData).children[33].children[0].value;
             let inputdata34 = document.getElementById(rowData).children[34].children[0].value;
+
             set(ref(db, forMatch + "/" + rowData),{
-                employeedata: {Name: inputdata0, zonetype: inputdata1, d2: inputdata2, d3: inputdata3, d4: inputdata4, d5: inputdata5, d6: inputdata6, d7: inputdata7, d8: inputdata8, d9: inputdata9, d10: inputdata10, d11: inputdata11, d12: inputdata12, d13: inputdata13, d14: inputdata14, d15: inputdata15, d16: inputdata16, d17: inputdata17, d18: inputdata18, d19: inputdata19, d20: inputdata20, d21: inputdata21, d22: inputdata22, d23: inputdata23, d24: inputdata24, d25: inputdata25, d26: inputdata26, d27: inputdata27, d28: inputdata28, d29: inputdata29, d30: inputdata30, d31: inputdata31, d32: inputdata32, d33: inputdata33, d34: inputdata34}
+                employeedata: {Name: inputdata0, zonetype: inputdata1, d2: inputdata2, d3: inputdata3, d4: inputdata4, d5: inputdata5, d6: inputdata6, d7: inputdata7, d8: inputdata8, d9: inputdata9, d10: inputdata10, d11: inputdata11, d12: inputdata12, d13: inputdata13, d14: inputdata14, d15: inputdata15, d16: inputdata16, d17: inputdata17, d18: inputdata18, d19: inputdata19, d20: inputdata20, d21: inputdata21, d22: inputdata22, d23: inputdata23, d24: inputdata24, d25: inputdata25, d26: inputdata26, d27: inputdata27, d28: inputdata28, d29: inputdata29, d30: inputdata30, d31: inputdata31, d32: inputdata32, d33: inputdata33, d34: inputdata34},
                 }
             ).then(()=>{
                 //alert("data added succesfully");
@@ -171,6 +194,29 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
                 }
                 RetData("pr0")
                 
+            }).catch((error)=>{
+                alert("Fail")
+                console.log(error)
+            })
+            get(child(dbRef, tempDate + "/zones/zonesdata")).then((snapshot)=>{
+                if(snapshot.exists()){
+                    document.getElementById("bufferDateTr").children[0].children[0].value = snapshot.val().z6_1;
+                    document.getElementById("bufferDateTr").children[1].children[0].value = snapshot.val().z6_2;
+                    document.getElementById("bufferDateTr").children[2].children[0].value = snapshot.val().z6_3;
+                    document.getElementById("bufferDateTr").children[3].children[0].value = snapshot.val().z6_4;
+                    document.getElementById("bufferDateTr").children[4].children[0].value = snapshot.val().z6_5;
+                    document.getElementById("bufferDateTr").children[5].children[0].value = snapshot.val().z6_o;
+                    document.getElementById("bufferDateTr").children[6].children[0].value = snapshot.val().z4_1;
+                    document.getElementById("bufferDateTr").children[7].children[0].value = snapshot.val().z4_2;
+                    document.getElementById("bufferDateTr").children[8].children[0].value = snapshot.val().z4_3;
+                    document.getElementById("bufferDateTr").children[9].children[0].value = snapshot.val().z4_4;
+                    document.getElementById("bufferDateTr").children[10].children[0].value = snapshot.val().z4_5;
+                    document.getElementById("bufferDateTr").children[11].children[0].value = snapshot.val().z4_o;
+                }else{
+                    for(let i = 0; i<12; i++){
+                        document.getElementById("bufferDateTr").children[i].children[0].value = "";
+                    }
+                }
             }).catch((error)=>{
                 alert("Fail")
                 console.log(error)
@@ -254,6 +300,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
                     document.getElementById(rowData).children[32].children[0].value = snapshot.val().d32;
                     document.getElementById(rowData).children[33].children[0].value = snapshot.val().d33;
                     document.getElementById(rowData).children[34].children[0].value = snapshot.val().d34;
+
                     countFactDiff();
                 }else{
                     let rowCount = 0;
@@ -318,6 +365,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
             if(document.getElementById("diff").children[0].rows[0].cells[n].innerHTML == 0){
                 document.getElementById("diff").children[0].rows[0].cells[n].innerHTML = "-";
                 document.getElementById("diff").children[0].rows[0].cells[n].style.backgroundColor = "white";
+                document.getElementById("diff").children[0].rows[0].cells[n].style.color = "black"
             }else if(document.getElementById("diff").children[0].rows[0].cells[n].innerText < 0){
                 document.getElementById("diff").children[0].rows[0].cells[n].style.backgroundColor = "#E52B50";
                 document.getElementById("diff").children[0].rows[0].cells[n].style.color = "white"
