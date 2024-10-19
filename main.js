@@ -102,7 +102,10 @@ function addHysterRow(){
 
         for(let j = 1; j<=rowCount; j++){
             document.getElementById("hyster").children[0].children[j].setAttribute('id', "hr"+j);
-            document.getElementById("hyster").children[0].children[j].children[columnCount-1].children[0].removeAttribute("hidden");
+            
+            document.getElementById("hyster").children[0].children[j].children[columnCount-1].children[0].setAttribute('id', "edit_hr"+j);
+            document.getElementById("hyster").children[0].children[j].children[columnCount-1].children[1].setAttribute('id', "save_hr"+j);
+            document.getElementById("hyster").children[0].children[j].children[columnCount-1].children[2].removeAttribute("hidden");
         }
     } catch (error) {
         console.error(error);
@@ -110,12 +113,72 @@ function addHysterRow(){
 
     try {
         for(let k = 1; k<=rowCount; k++){
-            document.getElementById("hr"+k).children[columnCount-1].children[0].setAttribute("onclick","removeHysterRow('"+k+"')")
+            document.getElementById("hr"+k).children[columnCount-1].children[2].setAttribute("onclick","removeHysterRow('"+k+"')")
+            document.getElementById("hr"+k).children[columnCount-1].children[0].setAttribute("onclick","setWorkingTime('"+k+"')")
+            document.getElementById("hr"+k).children[columnCount-1].children[1].setAttribute("onclick","saveWorkingTime('"+k+"')")
         }
     }  catch (error) {
         console.error(error);
     }
 
+}
+
+function setWorkingTime(row){
+    //let rowCount = document.getElementById("hyster").children[0].rows.length
+    let columnCount = document.getElementById("hyster").children[0].rows[0].cells.length;
+    document.getElementById("edit_hr"+row).disabled = true
+    document.getElementById("save_hr"+row).disabled = false
+    try {
+        for(let i = 2; i<columnCount-2; i++){
+            document.getElementById("hyster").children[0].children[row].children[i].children[0].hidden = true
+            let acceptB = document.createElement("button")
+            let cancelB = document.createElement("button")
+            acceptB.id = "accept0"+i;
+            acceptB.innerHTML = 'N/W';
+            document.getElementById("hyster").children[0].children[row].children[i].appendChild(acceptB);   
+            acceptB.addEventListener('click', function(){
+                acceptBFunc(i, row);
+            }); 
+            cancelB.id = "cancel0"+i;
+            cancelB.innerHTML = 'W';
+            document.getElementById("hyster").children[0].children[row].children[i].appendChild(cancelB);
+            cancelB.addEventListener('click', function(){
+                cancelBFunc(i, row);
+            }); 
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+function acceptBFunc(id, row){
+    document.getElementById("hyster").children[0].children[row].children[id].children[0].removeAttribute("hidden")
+    //document.getElementById("hyster").children[0].children[0].children[id].children[1].remove()
+    //document.getElementById("hyster").children[0].children[0].children[id].children[1].remove()
+    document.getElementById("accept0"+id).hidden = true
+    document.getElementById("cancel0"+id).hidden = true
+    document.getElementById("hyster").children[0].children[row].children[id].children[0].removeAttribute("hidden")
+    document.getElementById("hyster").children[0].children[row].children[id].children[0].value = "N/W"
+    document.getElementById("hyster").children[0].children[row].children[id].children[0].disabled = true
+}
+
+function cancelBFunc(id, row){
+    document.getElementById("accept0"+id).hidden = true
+    document.getElementById("cancel0"+id).hidden = true
+    document.getElementById("hyster").children[0].children[row].children[id].children[0].removeAttribute("hidden")
+    document.getElementById("hyster").children[0].children[row].children[id].children[0].value = ""
+    document.getElementById("hyster").children[0].children[row].children[id].children[0].disabled = false
+}
+
+function saveWorkingTime(row){
+    let columnCount = document.getElementById("hyster").children[0].rows[0].cells.length;
+    document.getElementById("edit_hr"+row).disabled = false
+    document.getElementById("save_hr"+row).disabled = true
+    for(let i = 2; i<columnCount-2; i++){
+        document.getElementById("hyster").children[0].children[row].children[i].children[1].remove()
+        document.getElementById("hyster").children[0].children[row].children[i].children[1].remove()
+        document.getElementById("hyster").children[0].children[row].children[i].children[0].removeAttribute("hidden")
+    }
 }
 
 function removeHysterRow(id){
