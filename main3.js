@@ -230,8 +230,28 @@ function hysterDataTable(){
 
     let hysterTdLast = document.createElement("td")
     hysterTdLast.id = "hysterTdLast";
-    hysterTdLast.className = "zones plan";
+    hysterTdLast.className = "workRow zones plan";
     document.getElementById("hr0").appendChild(hysterTdLast);
+
+    let workingTimeEdit = document.createElement("button")    //start
+    workingTimeEdit.id = "edit_hr0";
+    workingTimeEdit.className = "WorkRowButton";
+    workingTimeEdit.setAttribute('type', "button")
+    workingTimeEdit.innerHTML = '✎';
+    document.getElementById("hysterTdLast").appendChild(workingTimeEdit);
+    workingTimeEdit.addEventListener('click', function(){
+        setWorkingTime(0);
+    });
+
+    let workingTimeSave = document.createElement("button")
+    workingTimeSave.id = "save_hr0";
+    workingTimeSave.className = "WorkRowButton";
+    workingTimeSave.setAttribute('type', "button")
+    workingTimeSave.innerHTML = '💾';
+    document.getElementById("hysterTdLast").appendChild(workingTimeSave);
+    workingTimeSave.addEventListener('click', function(){
+        saveWorkingTime(0);
+    });                                                         //end
 
     let removeRowHysterButton = document.createElement("button")
     removeRowHysterButton.id = "removeRowHysterButton";
