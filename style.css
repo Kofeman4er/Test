@@ -292,4 +292,11 @@ margin-right: 80px;
     margin-top: 60px;
   }
 
+.WorkRowButton{
+    font-size: small;
+}
   
+.workRow{
+    display: flex;
+    width: fit-content;
+}
