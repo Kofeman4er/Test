@@ -174,10 +174,18 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
                 let hysterRow = document.getElementById("hyster").children[0].children[0];
                 let btRow = document.getElementById("bt").children[0].children[0];
                 
-                for(let i = 1; i<hCounter; i++){
+                for(let i = 1; i<hCounter; i++){                        //this
                     let newHysterRow = hysterRow.cloneNode(true);
+                    let columnCount = document.getElementById("hyster").children[0].rows[0].cells.length;
                     document.getElementById("hyster").children[0].append(newHysterRow);
                     document.getElementById("hyster").children[0].children[i].setAttribute('id', "hr"+i);
+                    document.getElementById("hr"+i).children[columnCount-1].children[2].setAttribute("onclick","removeHysterRow('"+i+"')")
+                    document.getElementById("hyster").children[0].children[i].children[columnCount-1].children[0].setAttribute('id', "edit_hr"+i);
+                    document.getElementById("hyster").children[0].children[i].children[columnCount-1].children[0].disabled = true;
+                    document.getElementById("hyster").children[0].children[i].children[columnCount-1].children[1].setAttribute('id', "save_hr"+i);
+                    document.getElementById("hyster").children[0].children[i].children[columnCount-1].children[1].disabled = true;
+                    document.getElementById("hr"+i).children[columnCount-1].children[1].setAttribute("onclick","saveWorkingTime('"+i+"')")
+                    document.getElementById("hr"+i).children[columnCount-1].children[0].setAttribute("onclick","setWorkingTime('"+i+"')")
                     RetData("hr"+i)
                 }
                 for(let i = 0; i<hCounter; i++){
@@ -185,8 +193,16 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
                 }
                 for(let i = 1; i<bCounter; i++){
                     let newBTRow = btRow.cloneNode(true);
+                    let columnCount = document.getElementById("bt").children[0].rows[0].cells.length;
                     document.getElementById("bt").children[0].append(newBTRow);
                     document.getElementById("bt").children[0].children[i].setAttribute('id', "br"+i);
+                    document.getElementById("br"+i).children[columnCount-1].children[2].setAttribute("onclick","removeBTRow('"+i+"')")
+                    document.getElementById("bt").children[0].children[i].children[columnCount-1].children[0].setAttribute('id', "edit_br"+i);
+                    document.getElementById("bt").children[0].children[i].children[columnCount-1].children[0].disabled = true;
+                    document.getElementById("bt").children[0].children[i].children[columnCount-1].children[1].setAttribute('id', "save_br"+i);
+                    document.getElementById("bt").children[0].children[i].children[columnCount-1].children[1].disabled = true;
+                    document.getElementById("br"+i).children[columnCount-1].children[1].setAttribute("onclick","saveWorkingTimeBT('"+i+"')")
+                    document.getElementById("br"+i).children[columnCount-1].children[0].setAttribute("onclick","setWorkingTimeBT('"+i+"')")
                     RetData("br"+i)
                 }
                 for(let i = 0; i<bCounter; i++){
@@ -251,8 +267,20 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
                     document.getElementById("addBTRowRowButton").setAttribute("disabled", true)
                     document.getElementById("addHysterRowButton").setAttribute("disabled", true)
                     document.getElementById("myBtn").setAttribute("disabled", true)
+                    let rowsCount = document.getElementById("hyster").children[0].rows.length
+                    for(let i = 0; i < rowsCount; i++){
+                        document.getElementById("hyster").children[0].children[i].children[35].children[1].disabled = true
+                        document.getElementById("hyster").children[0].children[i].children[35].children[0].disabled = true
+                        document.getElementById("hyster").children[0].children[i].children[35].children[2].hidden = true
+                    }
+                    let rowsCountBT = document.getElementById("bt").children[0].rows.length
+                    for(let i = 0; i < rowsCountBT; i++){
+                        document.getElementById("bt").children[0].children[i].children[35].children[1].disabled = true
+                        document.getElementById("bt").children[0].children[i].children[35].children[0].disabled = true
+                        document.getElementById("bt").children[0].children[i].children[35].children[2].hidden = true
+                    }
                 }
-                
+                    
             }
 
         }
@@ -300,7 +328,22 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
                     document.getElementById(rowData).children[32].children[0].value = snapshot.val().d32;
                     document.getElementById(rowData).children[33].children[0].value = snapshot.val().d33;
                     document.getElementById(rowData).children[34].children[0].value = snapshot.val().d34;
+                    if(tempDate == forMatch){
+                        if(rowData != "pr0"){
+                            document.getElementById(rowData).children[35].children[0].disabled = false;
+                        }
+                        if(rowData != "hr0" && rowData != "br0" && rowData != "pr0"){
+                            document.getElementById(rowData).children[35].children[2].removeAttribute("hidden");                        
+                        }
+                    }
+                    let columnCount = document.getElementById("hyster").children[0].rows[0].cells.length;
+                    for(let i = 2; i< columnCount-1; i++){
+                        if(document.getElementById(rowData).children[i].children[0].value == "N/W"){
+                            document.getElementById(rowData).children[i].children[0].disabled = true
+                        }else{
 
+                        }
+                    }
                     countFactDiff();
                 }else{
                     let rowCount = 0;
@@ -323,6 +366,10 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
                 alert("Fail")
                 console.log(error)
             })
+            let rowCount = document.getElementById("hyster").children[0].rows.length
+            for(let i = 0; i < rowCount; i++){
+                document.getElementById("hyster").children[0].children[i].children[35].children[1].disabled = true
+            }
         }
 
         function countFactDiff(){
