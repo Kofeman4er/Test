@@ -246,7 +246,8 @@ function hysterDataTable(){
     let workingTimeSave = document.createElement("button")
     workingTimeSave.id = "save_hr0";
     workingTimeSave.className = "WorkRowButton";
-    workingTimeSave.setAttribute('type', "button")
+    workingTimeSave.setAttribute('type', "button");
+    workingTimeSave.disabled = true;
     workingTimeSave.innerHTML = '💾';
     document.getElementById("hysterTdLast").appendChild(workingTimeSave);
     workingTimeSave.addEventListener('click', function(){
@@ -341,8 +342,29 @@ function btDataTable(){
 
     let btTdLast = document.createElement("td")
     btTdLast.id = "btTdLast";
-    btTdLast.className = "zones plan";
+    btTdLast.className = "workRow zones plan";
     document.getElementById("br0").appendChild(btTdLast);
+
+    let workingTimeEdit = document.createElement("button")    //start
+    workingTimeEdit.id = "edit_br0";
+    workingTimeEdit.className = "WorkRowButton";
+    workingTimeEdit.setAttribute('type', "button")
+    workingTimeEdit.innerHTML = '✎';
+    document.getElementById("btTdLast").appendChild(workingTimeEdit);
+    workingTimeEdit.addEventListener('click', function(){
+        setWorkingTimeBT(0);
+    });
+
+    let workingTimeSave = document.createElement("button")
+    workingTimeSave.id = "save_br0";
+    workingTimeSave.className = "WorkRowButton";
+    workingTimeSave.setAttribute('type', "button");
+    workingTimeSave.disabled = true;
+    workingTimeSave.innerHTML = '💾';
+    document.getElementById("btTdLast").appendChild(workingTimeSave);
+    workingTimeSave.addEventListener('click', function(){
+        saveWorkingTimeBT(0);
+    });                                                         //end
 
     let removeRowBTButton = document.createElement("button")
     removeRowBTButton.id = "removeRowHysterButton";
@@ -676,7 +698,6 @@ function checkCredentials(){
         saag.onclick = createSaagMachineBoard;
         let loginNav = document.getElementById("loginNav");
         topnav.insertBefore(saag, loginNav)
-        console.log(inputName, "", inputPass)
         modal.style.display = "none";
         document.getElementById("loginNav").style.display = 'none';
         document.getElementById("loginNav2").style.removeProperty('display');
