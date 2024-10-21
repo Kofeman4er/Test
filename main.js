@@ -1,359 +1,724 @@
-    let objectDate = new Date();
-    let day = objectDate.getDate();
-    let year = objectDate.getFullYear();
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May","Jun","Jul", "Aug", "Sep", "Oct", "Nov","Dec"];
-    let month = monthNames[objectDate.getMonth()];
-    let month2 = objectDate.getMonth();
+function createSaagMachineBoard(){
+    console.log(page)
+    if(page == 1){
 
-    if (day < 10) {
-        day = '0' + day;
-    }
-    if (month2+1 < 10) {
-        month2 = '0' + month2;
-    }
-    
-    let formatDate = `${month} ${day} ${year}`;
-    let forMatch = `${year}-${month2+1}-${day}`
-
-    let page = 0;
-    let tableEnabled = false;
-    let homePageEnabled = false;
-
-function addName() {
-    let inp = document.getElementById("nameinput").value
-    document.getElementById("nameselector").insertAdjacentHTML('beforeend', '<option value="' + inp + '"></option>')
-    document.getElementById("nameinput").value = '';
-    document.getElementById("workingtoday").insertAdjacentHTML('beforeend', '<p>' + inp + '</p>');
-};
-
-function getNumber(){
-    let input = document.getElementById("hyster").children[0].rows[0].cells[3].children[0].value;
-    console.log(input);
-    document.getElementById("plan").children[0].rows[0].cells[3].children[0].value = input;
-}
-
-function isNumber(value) {
-  return typeof value === 'number';
-}
-
-function tester(n){
-    let sum = 0;
-    let planSum = 0;
-    let pp = document.getElementById("hyster").children[0]
-    for(let i = 0; i<pp.rows.length; i++){
-        let t = Number(document.getElementById("hyster").children[0].rows[i].cells[n].children[0].value)
-            if(t == t){
-                sum = Number(sum) + t
-            }else{
-                i++;
-            }
-    }
-    let btRoute = document.getElementById("bt").children[0]
-    for(let i = 0; i<btRoute.rows.length; i++){
-        let t = Number(document.getElementById("bt").children[0].rows[i].cells[n].children[0].value)
-        if(t == t){
-            sum = Number(sum) + t
-        }else{
-            i++;
-        }   
-    }
-    document.getElementById("fact").children[0].rows[0].cells[n].innerHTML = sum;
-    if(document.getElementById("fact").children[0].rows[0].cells[n].innerHTML == 0){
-        document.getElementById("fact").children[0].rows[0].cells[n].innerHTML = "-"
-    }
-    let plan = Number(document.getElementById("plan").children[0].rows[0].cells[n].children[0].value);
-    if(plan == plan){
-        document.getElementById("diff").children[0].rows[0].cells[n].innerHTML = sum - Number(plan);
-    } 
-    if(document.getElementById("diff").children[0].rows[0].cells[n].innerHTML == 0){
-        document.getElementById("diff").children[0].rows[0].cells[n].innerHTML = "-";
-        document.getElementById("diff").children[0].rows[0].cells[n].style.backgroundColor = "white";
-    }else if(document.getElementById("diff").children[0].rows[0].cells[n].innerText < 0){
-        document.getElementById("diff").children[0].rows[0].cells[n].style.backgroundColor = "#E52B50";
-        document.getElementById("diff").children[0].rows[0].cells[n].style.color = "white"
-    }else if(document.getElementById("diff").children[0].rows[0].cells[n].innerText > 0){
-        document.getElementById("diff").children[0].rows[0].cells[n].style.backgroundColor = "#4FFFB0";
-        document.getElementById("diff").children[0].rows[0].cells[n].style.color = "black"
-    }
-    let gg = document.getElementById("plan").children[0].children[0];
-    for(let j = 2; j<gg.cells.length; j++){
-        let t = Number(document.getElementById("plan").children[0].rows[0].cells[j].children[0].value);
-        if(t == t){
-            planSum = planSum + t
-        }else{
-           alert("Plan should be set as a number");
-           document.getElementById("plan").children[0].rows[0].cells[j].children[0].value = '';
-        }   
-    }
-    document.getElementById("plancount").innerHTML = planSum;
-}
-
-function addHysterRow(){
-    let rowCount = document.getElementById("hyster").children[0].rows.length
-    let columnCount = document.getElementById("hyster").children[0].rows[0].cells.length;
-    let hysterRow = document.getElementById("hyster").children[0].children[0];
-    let newHysterRow = hysterRow.cloneNode(true);
-    document.getElementById("hyster").children[0].append(newHysterRow)
-
-    try {
-        for(let i = 0; i<columnCount; i++){
-            document.getElementById("hyster").children[0].children[rowCount].children[i].children[0].value = "";
-        }
-
-        for(let j = 1; j<=rowCount; j++){
-            document.getElementById("hyster").children[0].children[j].setAttribute('id', "hr"+j);      
-            document.getElementById("hyster").children[0].children[j].children[columnCount-1].children[0].setAttribute('id', "edit_hr"+j);
-            document.getElementById("hyster").children[0].children[j].children[columnCount-1].children[1].setAttribute('id', "save_hr"+j);
-            document.getElementById("hyster").children[0].children[j].children[columnCount-1].children[2].removeAttribute("hidden");
-        }
-    } catch (error) {
-        console.error(error);
-    }
-
-    try {
-        for(let k = 1; k<=rowCount; k++){
-            document.getElementById("hr"+k).children[columnCount-1].children[2].setAttribute("onclick","removeHysterRow('"+k+"')")
-            document.getElementById("hr"+k).children[columnCount-1].children[0].setAttribute("onclick","setWorkingTime('"+k+"')")
-            document.getElementById("hr"+k).children[columnCount-1].children[1].setAttribute("onclick","saveWorkingTime('"+k+"')")
-        }
-    }  catch (error) {
-        console.error(error);
-    }
-    
-    
-    for(let i = 0; i<columnCount-1; i++){
-        if (document.contains(document.getElementById("hyster").children[0].children[rowCount].children[i].children[1])) {
-            document.getElementById("hyster").children[0].children[rowCount].children[i].children[1].remove();
-        }
-        if (document.contains(document.getElementById("hyster").children[0].children[rowCount].children[i].children[1])) {
-        document.getElementById("hyster").children[0].children[rowCount].children[i].children[1].remove();}
-    }
-    saveWorkingTime(0);
-    saveWorkingTime(rowCount);
-                /**/
-
-}
-
-function setWorkingTime(row){
-    let rowCount = document.getElementById("hyster").children[0].rows.length
-    for(let i = 0; i<rowCount; i++){
-        if(row != i){
-            saveWorkingTime(i)
-        }
-    }
-    let columnCount = document.getElementById("hyster").children[0].rows[0].cells.length;
-    document.getElementById("edit_hr"+row).disabled = true
-    document.getElementById("save_hr"+row).disabled = false
-    try {
-        for(let i = 2; i<columnCount-1; i++){
-            document.getElementById("hyster").children[0].children[row].children[i].children[0].hidden = true
-            let acceptB = document.createElement("button")
-            let cancelB = document.createElement("button")
-            acceptB.id = "accept0"+i;
-            acceptB.innerHTML = 'N/W';
-            document.getElementById("hyster").children[0].children[row].children[i].appendChild(acceptB);   
-            acceptB.addEventListener('click', function(){
-                acceptBFunc(i, row);
-            }); 
-            cancelB.id = "cancel0"+i;
-            cancelB.innerHTML = 'W';
-            document.getElementById("hyster").children[0].children[row].children[i].appendChild(cancelB);
-            cancelB.addEventListener('click', function(){
-                cancelBFunc(i, row);
-            }); 
-        }
-    } catch (error) {
-        console.error(error);
+    }else if(page != 1 && tableEnabled == false){
+        document.getElementById("mainDiv").style.display = 'none';
+        document.getElementById("newId").style.removeProperty('display')
+        addMainDiv(); 
+        page = 1;
+        tableEnabled = true;
+    }else if(page != 1 && tableEnabled == true){
+        document.getElementById("mainDiv").style.display = 'none';
+        document.getElementById("newId").style.removeProperty('display')
+        page = 1;
     }
 }
 
-function acceptBFunc(id, row){
-    document.getElementById("hyster").children[0].children[row].children[id].children[0].removeAttribute("hidden")
-    document.getElementById("accept0"+id).hidden = true
-    document.getElementById("cancel0"+id).hidden = true
-    document.getElementById("hyster").children[0].children[row].children[id].children[0].removeAttribute("hidden")
-    document.getElementById("hyster").children[0].children[row].children[id].children[0].value = "N/W"
-    document.getElementById("hyster").children[0].children[row].children[id].children[0].disabled = true
+function addMainDiv(){
+    let header = document.createElement("div")
+    header.className = "header";
+    header.id = "header";
+    document.getElementById("newId").appendChild(header);
+
+    let table = document.createElement("div")
+    table.className = "table";
+    document.getElementById("newId").appendChild(table);
+    table.id = "table";
+
+    let offload = document.createElement("div")
+    offload.className = "offload";
+    offload.id = "offload";
+    document.getElementById("newId").appendChild(offload);
+
+    let addWorkersBlock = document.createElement("div")
+    addWorkersBlock.className = "addWorkers";
+    addWorkersBlock.id = "addWorkersBlock";
+    document.getElementById("newId").appendChild(addWorkersBlock);
+
+    let workingtoday = document.createElement("div")
+    workingtoday.className = "workingtoday";
+    workingtoday.id = "workingtoday";
+    document.getElementById("newId").appendChild(workingtoday);
+    insideHeader()
+    }
+
+//---HHHH------header data:
+
+function insideHeader(){
+    let dateheader = document.createElement("div")
+    dateheader.className = "dateheader";
+    dateheader.id = "dateheader";
+    dateheader.innerHTML = "Today:";
+    document.getElementById("header").appendChild(dateheader);
+
+    let datenow = document.createElement("div")
+    datenow.className = "datenow";
+    datenow.id = "todaysDate";
+    datenow.innerHTML = formatDate;
+    document.getElementById("header").appendChild(datenow);
+
+    let plantotal = document.createElement("div")
+    plantotal.className = "plantotal";
+    plantotal.id = "plantotal";
+    document.getElementById("header").appendChild(plantotal);
+
+    let planForToday = document.createElement("h4")
+    planForToday.innerHTML = "Plan for today: ";
+    document.getElementById("plantotal").appendChild(planForToday);
+
+    let plancount = document.createElement("p")
+    plancount.id = "plancount";
+    plancount.innerHTML = "--";
+    document.getElementById("plantotal").appendChild(plancount);
+
+    let loadDataDiv = document.createElement("div")
+    loadDataDiv.id="loadDataDiv";
+    document.getElementById("header").appendChild(loadDataDiv);
+
+    let loadDataInput = document.createElement("input")
+    loadDataInput.id = "loaddata";
+    loadDataInput.setAttribute('type', "date")
+    document.getElementById("loadDataDiv").appendChild(loadDataInput);
+
+    let loadButtonDiv = document.createElement("div")
+    loadButtonDiv.id = "loadButtonDiv"
+    document.getElementById("header").appendChild(loadButtonDiv);
+
+    let loadButton = document.createElement("button")
+    loadButton.id = "loadbutton";
+    loadButton.setAttribute('type', "button")
+    loadButton.innerHTML = 'Load';
+    document.getElementById("loadButtonDiv").appendChild(loadButton);
+
+    let saveButtonDiv = document.createElement("div")
+    saveButtonDiv.id = "saveButtonDiv";
+    document.getElementById("header").appendChild(saveButtonDiv);
+
+    let saveButton = document.createElement("button")
+    saveButton.id = "savebutton";
+    saveButton.setAttribute('type', "button")
+    saveButton.innerHTML = 'Save';
+    document.getElementById("saveButtonDiv").appendChild(saveButton);
+
+    createDatatableDiv()
 }
 
-function cancelBFunc(id, row){
-    document.getElementById("accept0"+id).hidden = true
-    document.getElementById("cancel0"+id).hidden = true
-    document.getElementById("hyster").children[0].children[row].children[id].children[0].removeAttribute("hidden")
-    document.getElementById("hyster").children[0].children[row].children[id].children[0].value = ""
-    document.getElementById("hyster").children[0].children[row].children[id].children[0].disabled = false
+//---TTTT---table data:
+
+function createDatatableDiv(){
+    let createDatatable = document.createElement("div");
+    createDatatable.className = "datatable";
+    createDatatable.id = "datatable";
+    document.getElementById("table").appendChild(createDatatable);
+    headerData()
+    hysterDataTable()
+    btDataTable()
+    planDataTable()
+    factDataTable()
+    diffDataTable()
+    offloadTable()
+    offloadDateTable()
+    addWorkersInput()
+    showWorkingToday()
 }
 
-function saveWorkingTime(row){
-    let columnCount = document.getElementById("hyster").children[0].rows[0].cells.length;
-    document.getElementById("edit_hr"+row).disabled = false
-    document.getElementById("save_hr"+row).disabled = true
-    try {
-        for(let i = 2; i<columnCount-1; i++){
-            if (document.contains(document.getElementById("hyster").children[0].children[row].children[i].children[1])) {
-                document.getElementById("hyster").children[0].children[row].children[i].children[1].remove();
-            }
-            if (document.contains(document.getElementById("hyster").children[0].children[row].children[i].children[1])) {
-                document.getElementById("hyster").children[0].children[row].children[i].children[1].remove();
-            }
-        document.getElementById("hyster").children[0].children[row].children[i].children[0].removeAttribute("hidden")
-        }
-    }catch (error) {
-        console.error(error);
-    }
-}
+//header of the table:
 
-function removeHysterRow(id){
-    let elem = document.getElementById("hr"+id);
-    elem.remove();
-    let rowCount = document.getElementById("hyster").children[0].rows.length;
-    let columnCount = document.getElementById("hyster").children[0].rows[0].cells.length;
-    for(let j = 1; j<rowCount; j++){
-        document.getElementById("hyster").children[0].children[j].setAttribute('id', "hr"+j);
-        
-        document.getElementById("hyster").children[0].children[j].children[columnCount-1].children[0].setAttribute('id', "edit_hr"+j);
-        document.getElementById("hyster").children[0].children[j].children[columnCount-1].children[0].setAttribute('onClick', "setWorkingTime("+j+")");
-        document.getElementById("hyster").children[0].children[j].children[columnCount-1].children[1].setAttribute('id', "save_hr"+j);
-        document.getElementById("hyster").children[0].children[j].children[columnCount-1].children[1].setAttribute('onClick', "saveWorkingTime("+j+")");
-        document.getElementById("hyster").children[0].children[j].children[columnCount-1].children[2].setAttribute('onClick', "removeHysterRow("+j+")");
-        document.getElementById("hyster").children[0].children[j].children[columnCount-1].children[2].removeAttribute("hidden");
-    }
-    for(let i = 2; i<35; i++){  //todo
-    tester(i);
-    }
-}
+function headerData(){
+    let createDatatableHead = document.createElement("div");
+    createDatatableHead.className = "v1";
+    createDatatableHead.id = "v1head";
+    document.getElementById("datatable").appendChild(createDatatableHead);
 
-function addBTRow(){
-    document.getElementById("bt").children[0].children[0].setAttribute('id', "br" + 0);
-    let rowCount = document.getElementById("bt").children[0].rows.length
-    let columnCount = document.getElementById("bt").children[0].rows[0].cells.length;
-    let btRow = document.getElementById("bt").children[0].children[0];
-    let newBTRow = btRow.cloneNode(true);
-    document.getElementById("bt").children[0].append(newBTRow)
+    let leftHead = document.createElement("div")
+    leftHead.className = "left";
+    leftHead.id = "leftHead";
+    leftHead.innerHTML = "Type";
+    document.getElementById("v1head").appendChild(leftHead);
 
-    try {
-        for(let i = 0; i<columnCount; i++){
-            document.getElementById("bt").children[0].children[rowCount].children[i].children[0].value = "";
-        }
+    let headerD = document.createElement("table")
+    headerD.className = "data";
+    headerD.id = "headerD";
+    document.getElementById("v1head").appendChild(headerD);
 
-        for(let j = 1; j<=rowCount; j++){
-            document.getElementById("bt").children[0].children[j].setAttribute('id', "br"+j);
+    let headerDtr = document.createElement("tr")
+    headerDtr.id = "headerDtr";
+    document.getElementById("headerD").appendChild(headerDtr);
 
-            document.getElementById("bt").children[0].children[j].children[columnCount-1].children[0].setAttribute('id', "edit_br"+j);
-            document.getElementById("bt").children[0].children[j].children[columnCount-1].children[1].setAttribute('id', "save_br"+j);
-            document.getElementById("bt").children[0].children[j].children[columnCount-1].children[2].removeAttribute("hidden");
-         }
-    } catch (error) {
-        console.error(error);
+    let headerDArray = ['', 'Choose zone:', '6:00-6:15', '6:15-6:30', '6:30-6:45', '6:45-7:00', '7:00-7:15', '7:15-7:30', '7:30-7:45', '7:45-8:00', '8:00-8:15', '8:15-8:30', '8:30-8:45', '8:45-9:00', '9:00-9:15', '9:15-9:30', '9:30-9:45', '9:45-10:00', '10:00-10:15', '10:15-10:30', '10:30-10:45', '10:45-11:00', '11:00-11:15', '11:15-11:30', '11:30-11:45', '11:45-12:00', '12:00-12:15', '12:15-12:30', '12:30-12:45', '12:45-13:00', '13:00-13:15', '13:15-13:30', '13:30-13:45', '13:45-14:00', '14:00-14:15', ''];
+    let tdData = 0;
+
+    let headerDTdOne = document.createElement("td")
+    headerDTdOne.className = "name";
+    headerDTdOne.innerHTML = "Name";
+    document.getElementById("headerDtr").appendChild(headerDTdOne);
+
+    let headerDTdTwo = document.createElement("td")
+    headerDTdTwo.className = "zones";
+    headerDTdTwo.id = "headerDTdTwo";
+    headerDTdTwo.innerHTML = "<label>Choose zone:</label></td>";
+    document.getElementById("headerDtr").appendChild(headerDTdTwo);
+
+    for(let i = 2; i<headerDArray.length-1; i++){
+        //tdData = headerDArray[i];
+        tdData = document.createElement("td")
+        tdData.innerHTML = headerDArray[i];
+        document.getElementById("headerDtr").appendChild(tdData);
     }
 
-    try {
-        for(let k = 1; k<=rowCount; k++){
-            document.getElementById("br"+k).children[columnCount-1].children[0].setAttribute("onclick","removeBTRow('"+k+"')")
-            document.getElementById("br"+k).children[columnCount-1].children[0].setAttribute("onclick","setWorkingTimeBT('"+k+"')")
-            document.getElementById("br"+k).children[columnCount-1].children[1].setAttribute("onclick","saveWorkingTimeBT('"+k+"')")
-        }
-    }  catch (error) {
-        console.error(error);
-    }
-
-    for(let i = 0; i<columnCount-1; i++){
-        if (document.contains(document.getElementById("bt").children[0].children[rowCount].children[i].children[1])) {
-            document.getElementById("bt").children[0].children[rowCount].children[i].children[1].remove();
-        }
-        if (document.contains(document.getElementById("bt").children[0].children[rowCount].children[i].children[1])) {
-        document.getElementById("bt").children[0].children[rowCount].children[i].children[1].remove();}
-    }
-    saveWorkingTimeBT(0);
-    saveWorkingTimeBT(rowCount);
+    let headerDTdLast = document.createElement("td")
+    headerDTdLast.className = "zones plan";
+    document.getElementById("headerDtr").appendChild(headerDTdLast);
 
 }
 
-function setWorkingTimeBT(row){
-    let rowCount = document.getElementById("bt").children[0].rows.length
-    for(let i = 0; i<rowCount; i++){
-        if(row != i){
-            saveWorkingTimeBT(i)
-        }
-    }
-    let columnCount = document.getElementById("bt").children[0].rows[0].cells.length;
-    document.getElementById("edit_br"+row).disabled = true
-    document.getElementById("save_br"+row).disabled = false
-    try {
-        for(let i = 2; i<columnCount-1; i++){
-            document.getElementById("bt").children[0].children[row].children[i].children[0].hidden = true
-            let acceptB = document.createElement("button")
-            let cancelB = document.createElement("button")
-            acceptB.id = "accept1"+i;
-            acceptB.innerHTML = 'N/W';
-            document.getElementById("bt").children[0].children[row].children[i].appendChild(acceptB);   
-            acceptB.addEventListener('click', function(){
-                acceptBFuncBT(i, row);
-            }); 
-            cancelB.id = "cancel1"+i;
-            cancelB.innerHTML = 'W';
-            document.getElementById("bt").children[0].children[row].children[i].appendChild(cancelB);
-            cancelB.addEventListener('click', function(){
-                cancelBFuncBT(i, row);
-            }); 
-        }
-    } catch (error) {
-        console.error(error);
-    }
-}
+//Hyster table:
 
-function acceptBFuncBT(id, row){
-    document.getElementById("bt").children[0].children[row].children[id].children[0].removeAttribute("hidden")
-    document.getElementById("accept1"+id).hidden = true
-    document.getElementById("cancel1"+id).hidden = true
-    document.getElementById("bt").children[0].children[row].children[id].children[0].removeAttribute("hidden")
-    document.getElementById("bt").children[0].children[row].children[id].children[0].value = "N/W"
-    document.getElementById("bt").children[0].children[row].children[id].children[0].disabled = true
-}
+function hysterDataTable(){
+    let createDatatableHyster = document.createElement("div");
+    createDatatableHyster.className = "v1";
+    createDatatableHyster.id = "v1hyster";
+    document.getElementById("datatable").appendChild(createDatatableHyster);
 
-function cancelBFuncBT(id, row){
-    document.getElementById("accept1"+id).hidden = true
-    document.getElementById("cancel1"+id).hidden = true
-    document.getElementById("bt").children[0].children[row].children[id].children[0].removeAttribute("hidden")
-    document.getElementById("bt").children[0].children[row].children[id].children[0].value = ""
-    document.getElementById("bt").children[0].children[row].children[id].children[0].disabled = false
-}
+    let leftHyster = document.createElement("div")
+    leftHyster.className = "left";
+    leftHyster.id = "hysterdiv";
+    leftHyster.innerHTML = "Hyster";
+    document.getElementById("v1hyster").appendChild(leftHyster);
 
-function saveWorkingTimeBT(row){
-    let columnCount = document.getElementById("bt").children[0].rows[0].cells.length;
-    document.getElementById("edit_br"+row).disabled = false
-    document.getElementById("save_br"+row).disabled = true
-    try {
-        for(let i = 2; i<columnCount-1; i++){
-            if (document.contains(document.getElementById("bt").children[0].children[row].children[i].children[1])) {
-                document.getElementById("bt").children[0].children[row].children[i].children[1].remove();
-            }
-            if (document.contains(document.getElementById("bt").children[0].children[row].children[i].children[1])) {
-                document.getElementById("bt").children[0].children[row].children[i].children[1].remove();
-            }
-        document.getElementById("bt").children[0].children[row].children[i].children[0].removeAttribute("hidden")
-        }
-    }catch (error) {
-        console.error(error);
-    }
-}
+    let hysterTable = document.createElement("table")
+    hysterTable.className = "data";
+    hysterTable.id = "hyster";
+    document.getElementById("v1hyster").appendChild(hysterTable);
 
-function removeBTRow(id){
-    let elem = document.getElementById("br"+id);
-    elem.remove();
-    for(let j = 1; j<rowCount; j++){
-        document.getElementById("bt").children[0].children[j].setAttribute('id', "br"+j);
-        
-        document.getElementById("bt").children[0].children[j].children[columnCount-1].children[0].setAttribute('id', "edit_br"+j);
-        document.getElementById("bt").children[0].children[j].children[columnCount-1].children[0].setAttribute('onClick', "setWorkingTimeBT("+j+")");
-        document.getElementById("bt").children[0].children[j].children[columnCount-1].children[1].setAttribute('id', "save_br"+j);
-        document.getElementById("bt").children[0].children[j].children[columnCount-1].children[1].setAttribute('onClick', "saveWorkingTimeBT("+j+")");
-        document.getElementById("bt").children[0].children[j].children[columnCount-1].children[2].setAttribute('onClick', "removeBTRow("+j+")");
-        document.getElementById("bt").children[0].children[j].children[columnCount-1].children[2].removeAttribute("hidden");
-    }
+    let hysterTbody = document.createElement("tbody")
+    hysterTbody.id = "hysterTbody";
+    document.getElementById("hyster").appendChild(hysterTbody);
+
+    let hysterTr = document.createElement("tr")
+    hysterTr.id = "hr0";
+    document.getElementById("hysterTbody").appendChild(hysterTr);
+
+    let hysterTdOne = document.createElement("td")
+    hysterTdOne.className = "name";
+    hysterTdOne.id = "nameTd";
+    document.getElementById("hr0").appendChild(hysterTdOne);
+
+    let hysterTdOneInput = document.createElement("input")
+    hysterTdOneInput.className = "name";
+    hysterTdOneInput.onclick= function(){this.value = ""};
+    hysterTdOneInput.setAttribute('list', "nameselector")
+    document.getElementById("nameTd").appendChild(hysterTdOneInput);
+
+    let hysterTdTwo = document.createElement("td")
+    hysterTdTwo.className = "zones";
+    hysterTdTwo.id = "uuu";
+    document.getElementById("hr0").appendChild(hysterTdTwo);
+
+    let hysterTdTwoInput = document.createElement("input")
+    hysterTdTwoInput.className = "zone";
+    hysterTdTwoInput.onclick= function(){this.value = ""};
+    hysterTdTwoInput.setAttribute('list', "zoneselector")
+    document.getElementById("uuu").appendChild(hysterTdTwoInput);
+
     for(let i = 2; i<35; i++){
-    tester(i);
+        tdHyster = document.createElement("td")
+        tdHyster.innerHTML = '<input onchange="tester('+i+')">';
+        document.getElementById("hr0").appendChild(tdHyster);
+    }
+
+    let hysterTdLast = document.createElement("td")
+    hysterTdLast.id = "hysterTdLast";
+    hysterTdLast.className = "workRow zones plan";
+    document.getElementById("hr0").appendChild(hysterTdLast);
+
+    let workingTimeEdit = document.createElement("button")    //start
+    workingTimeEdit.id = "edit_hr0";
+    workingTimeEdit.className = "WorkRowButton";
+    workingTimeEdit.setAttribute('type', "button")
+    workingTimeEdit.innerHTML = '✎';
+    document.getElementById("hysterTdLast").appendChild(workingTimeEdit);
+    workingTimeEdit.addEventListener('click', function(){
+        setWorkingTime(0);
+    });
+
+    let workingTimeSave = document.createElement("button")
+    workingTimeSave.id = "save_hr0";
+    workingTimeSave.className = "WorkRowButton";
+    workingTimeSave.setAttribute('type', "button");
+    workingTimeSave.disabled = true;
+    workingTimeSave.innerHTML = '💾';
+    document.getElementById("hysterTdLast").appendChild(workingTimeSave);
+    workingTimeSave.addEventListener('click', function(){
+        saveWorkingTime(0);
+    });                                                         //end
+
+    let removeRowHysterButton = document.createElement("button")
+    removeRowHysterButton.id = "removeRowHysterButton";
+    removeRowHysterButton.className = "removeRowButton";
+    removeRowHysterButton.setAttribute('type', "button")
+    removeRowHysterButton.hidden = true
+    removeRowHysterButton.innerHTML = '-';
+    document.getElementById("hysterTdLast").appendChild(removeRowHysterButton);
+    removeRowHysterButton.onclick = removeHysterRow;
+
+
+    let hysterDataListZone = document.createElement("datalist")
+    hysterDataListZone.id = "zoneselector";
+    hysterDataListZone.innerHTML = '<option value="4"></option><option value="6"></option>';
+    document.getElementById("v1hyster").appendChild(hysterDataListZone);
+
+    let hysterDataListName = document.createElement("datalist")
+    hysterDataListName.id = "nameselector";
+    hysterDataListName.innerHTML = '<option value="test"></option>';
+    document.getElementById("v1hyster").appendChild(hysterDataListName);
+
+    let addRowHyster = document.createElement("div");
+    addRowHyster.id = "addRowHyster";
+    document.getElementById("datatable").appendChild(addRowHyster);
+
+    let addRowHysterButton = document.createElement("button")
+    addRowHysterButton.id = "addHysterRowButton";
+    addRowHysterButton.className = "addRowButton";
+    addRowHysterButton.setAttribute('type', "button")
+    addRowHysterButton.innerHTML = '+';
+    document.getElementById("addRowHyster").appendChild(addRowHysterButton);
+    addRowHysterButton.onclick = addHysterRow;
+}
+
+//BT table:
+
+function btDataTable(){
+    let createDatatableBT = document.createElement("div");
+    createDatatableBT.className = "v1";
+    createDatatableBT.id = "v1bt";
+    document.getElementById("datatable").appendChild(createDatatableBT);
+
+    let leftBT = document.createElement("div")
+    leftBT.className = "left";
+    leftBT.id = "btdiv";
+    leftBT.innerHTML = "BT";
+    document.getElementById("v1bt").appendChild(leftBT);
+
+    let btTable = document.createElement("table")
+    btTable.className = "data";
+    btTable.id = "bt";
+    document.getElementById("v1bt").appendChild(btTable);
+
+    let btTbody = document.createElement("tbody")
+    btTbody.id = "btTbody";
+    document.getElementById("bt").appendChild(btTbody);
+
+    let btTr = document.createElement("tr")
+    btTr.id = "br0";
+    document.getElementById("btTbody").appendChild(btTr);
+
+    let btTdOne = document.createElement("td")
+    btTdOne.className = "name";
+    btTdOne.id = "btTdOne";
+    document.getElementById("br0").appendChild(btTdOne);
+
+    let btTdOneInput = document.createElement("input")
+    btTdOneInput.className = "name";
+    btTdOneInput.onclick= function(){this.value = ""};
+    btTdOneInput.setAttribute('list', "nameselector")
+    document.getElementById("btTdOne").appendChild(btTdOneInput);
+
+    let btTdTwo = document.createElement("td")
+    btTdTwo.className = "zones plan";
+    btTdTwo.id = "btTdTwo";
+    document.getElementById("br0").appendChild(btTdTwo);
+
+    let btTdTwoInput = document.createElement("input")
+    btTdTwoInput.hidden = true
+    document.getElementById("btTdTwo").appendChild(btTdTwoInput);
+
+    for(let i = 2; i<35; i++){
+        tdBT = document.createElement("td")
+        tdBT.innerHTML = '<input onchange="tester('+i+')">';
+        document.getElementById("br0").appendChild(tdBT);
+    }
+
+    let btTdLast = document.createElement("td")
+    btTdLast.id = "btTdLast";
+    btTdLast.className = "workRow zones plan";
+    document.getElementById("br0").appendChild(btTdLast);
+
+    let workingTimeEdit = document.createElement("button")    //start
+    workingTimeEdit.id = "edit_br0";
+    workingTimeEdit.className = "WorkRowButton";
+    workingTimeEdit.setAttribute('type', "button")
+    workingTimeEdit.innerHTML = '✎';
+    document.getElementById("btTdLast").appendChild(workingTimeEdit);
+    workingTimeEdit.addEventListener('click', function(){
+        setWorkingTimeBT(0);
+    });
+
+    let workingTimeSave = document.createElement("button")
+    workingTimeSave.id = "save_br0";
+    workingTimeSave.className = "WorkRowButton";
+    workingTimeSave.setAttribute('type', "button");
+    workingTimeSave.disabled = true;
+    workingTimeSave.innerHTML = '💾';
+    document.getElementById("btTdLast").appendChild(workingTimeSave);
+    workingTimeSave.addEventListener('click', function(){
+        saveWorkingTimeBT(0);
+    });                                                         //end
+
+    let removeRowBTButton = document.createElement("button")
+    removeRowBTButton.id = "removeRowHysterButton";
+    removeRowBTButton.className = "removeRowButton";
+    removeRowBTButton.setAttribute('type', "button")
+    removeRowBTButton.hidden = true
+    removeRowBTButton.innerHTML = '-';
+    document.getElementById("btTdLast").appendChild(removeRowBTButton);
+    removeRowBTButton.onclick = removeHysterRow;
+
+    let btDataListName = document.createElement("datalist")
+    btDataListName.id = "nameselector";
+    btDataListName.innerHTML = '<option value="test"></option>';
+    document.getElementById("v1bt").appendChild(btDataListName);
+
+    let addRowBT = document.createElement("div");
+    addRowBT.id = "addRowBT";
+    document.getElementById("datatable").appendChild(addRowBT);
+
+    let addRowBTButton = document.createElement("button")
+    addRowBTButton.id = "addBTRowRowButton";
+    addRowBTButton.className = "addRowButton";
+    addRowBTButton.setAttribute('type', "button")
+    addRowBTButton.innerHTML = '+';
+    document.getElementById("addRowBT").appendChild(addRowBTButton);
+    addRowBTButton.onclick = addBTRow;
+}
+
+//Plan table:
+function planDataTable(){
+    let createDatatablePlan = document.createElement("div");
+    createDatatablePlan.className = "v1";
+    createDatatablePlan.id = "v1plan";
+    document.getElementById("datatable").appendChild(createDatatablePlan);
+
+    let leftPlan = document.createElement("div")
+    leftPlan.className = "left";
+    leftPlan.id = "planDiv";
+    leftPlan.innerHTML = "Plan";
+    document.getElementById("v1plan").appendChild(leftPlan);
+
+    let planTable = document.createElement("table")
+    planTable.className = "data";
+    planTable.id = "plan";
+    document.getElementById("v1plan").appendChild(planTable);
+
+    let planTbody = document.createElement("tbody")
+    planTbody.id = "planTbody";
+    document.getElementById("plan").appendChild(planTbody);
+
+    let planTr = document.createElement("tr")
+    planTr.id = "pr0";
+    document.getElementById("planTbody").appendChild(planTr);
+
+    let planTdOne = document.createElement("td")
+    planTdOne.className = "name plan";
+    planTdOne.id = "planTdOne";
+    document.getElementById("pr0").appendChild(planTdOne);
+
+    let planTdOneInput = document.createElement("input")
+    planTdOneInput.hidden = true
+    document.getElementById("planTdOne").appendChild(planTdOneInput);
+
+    let planTdTwo = document.createElement("td")
+    planTdTwo.className = "zones plan";
+    planTdTwo.id = "planTdTwo";
+    document.getElementById("pr0").appendChild(planTdTwo);
+
+    let planTdTwoInput = document.createElement("input")
+    planTdTwoInput.hidden = true
+    document.getElementById("planTdTwo").appendChild(planTdTwoInput);
+
+    for(let i = 2; i<35; i++){
+        tdPlan = document.createElement("td")
+        tdPlan.innerHTML = '<input onchange="tester('+i+')">';
+        document.getElementById("pr0").appendChild(tdPlan);
     }
 }
 
+//Fact table:
 
+function factDataTable(){
+    let createDatatableFact = document.createElement("div");
+    createDatatableFact.className = "v1";
+    createDatatableFact.id = "v1fact";
+    document.getElementById("datatable").appendChild(createDatatableFact);
+
+    let leftFact = document.createElement("div")
+    leftFact.className = "left";
+    leftFact.id = "factDiv";
+    leftFact.innerHTML = "Fact";
+    document.getElementById("v1fact").appendChild(leftFact);
+
+    let factTable = document.createElement("table")
+    factTable.className = "data";
+    factTable.id = "fact";
+    document.getElementById("v1fact").appendChild(factTable);
+
+    let factTbody = document.createElement("tbody")
+    factTbody.id = "factTbody";
+    document.getElementById("fact").appendChild(factTbody);
+
+    let factTr = document.createElement("tr")
+    factTr.id = "fr0";
+    document.getElementById("factTbody").appendChild(factTr);
+
+    let factTdOne = document.createElement("td")
+    factTdOne.className = "name plan";
+    document.getElementById("fr0").appendChild(factTdOne);
+
+    let factTdTwo = document.createElement("td")
+    factTdTwo.className = "zones plan";
+    document.getElementById("fr0").appendChild(factTdTwo);
+
+
+    for(let i = 2; i<35; i++){
+        tdFact = document.createElement("td")
+        tdFact.innerHTML = '-';
+        document.getElementById("fr0").appendChild(tdFact);
+    }
+}
+
+//Diff table:
+
+function diffDataTable(){
+    let createDatatableDiff = document.createElement("div");
+    createDatatableDiff.className = "v1";
+    createDatatableDiff.id = "v1diff";
+    document.getElementById("datatable").appendChild(createDatatableDiff);
+
+    let leftDiff = document.createElement("div")
+    leftDiff.className = "left";
+    leftDiff.id = "diffDiv";
+    leftDiff.innerHTML = "Diff";
+    document.getElementById("v1diff").appendChild(leftDiff);
+
+    let diffTable = document.createElement("table")
+    diffTable.className = "data";
+    diffTable.id = "diff";
+    document.getElementById("v1diff").appendChild(diffTable);
+
+    let diffTbody = document.createElement("tbody")
+    diffTbody.id = "diffTbody";
+    document.getElementById("diff").appendChild(diffTbody);
+
+    let diffTr = document.createElement("tr")
+    diffTr.id = "dr0";
+    document.getElementById("diffTbody").appendChild(diffTr);
+
+    let diffTdOne = document.createElement("td")
+    diffTdOne.className = "name plan";
+    document.getElementById("dr0").appendChild(diffTdOne);
+
+    let diffTdTwo = document.createElement("td")
+    diffTdTwo.className = "zones plan";
+    document.getElementById("dr0").appendChild(diffTdTwo);
+
+
+    for(let i = 2; i<35; i++){
+        tdDiff = document.createElement("td")
+        tdDiff.innerHTML = '-';
+        document.getElementById("dr0").appendChild(tdDiff);
+    }
+}
+
+//-----FFFF-----Footer table:
+//----buffer table:
+function offloadTable(){
+    let createOffload = document.createElement("div");
+    createOffload.id = "createOffload";
+    document.getElementById("offload").appendChild(createOffload);
+
+    let createBufferTitle = document.createElement("div");
+    createBufferTitle.className = "v1";
+    createBufferTitle.id = "createBufferTitle";
+    document.getElementById("createOffload").appendChild(createBufferTitle);
+
+    let leftBuffer = document.createElement("div")
+    leftBuffer.className = "left";
+    leftBuffer.id = "leftBuffer";
+    leftBuffer.innerHTML = "Buffer";
+    document.getElementById("createBufferTitle").appendChild(leftBuffer);
+
+    let bufferTable = document.createElement("table")
+    bufferTable.className = "buffer";
+    bufferTable.id = "bufferTable";
+    document.getElementById("createBufferTitle").appendChild(bufferTable);
+
+    let bufferTbody = document.createElement("tbody")
+    bufferTbody.id = "bufferTbody";
+    document.getElementById("bufferTable").appendChild(bufferTbody);
+
+    let bufferTr = document.createElement("tr")
+    bufferTr.id = "buff";
+    bufferTr.className = "buff";
+    document.getElementById("bufferTbody").appendChild(bufferTr);
+
+    for(let i = 0; i<6; i++){
+        tdBuffer = document.createElement("td")
+        if(i < 5){
+            tdBuffer.innerHTML = 'z6: ' + (i+1);
+            document.getElementById("buff").appendChild(tdBuffer);
+        }else{
+            tdBuffer.innerHTML = 'z6: overflow';
+            document.getElementById("buff").appendChild(tdBuffer);
+        }
+    }
+
+    for(let i = 0; i<6; i++){
+        tdBuffer = document.createElement("td")
+        if(i < 5){
+            tdBuffer.innerHTML = 'z4: ' + (i+1);
+            document.getElementById("buff").appendChild(tdBuffer);
+        }else{
+            tdBuffer.innerHTML = 'z4: overflow';
+            document.getElementById("buff").appendChild(tdBuffer);
+        }
+    }
+}
+
+//-----buffer dates table:
+
+function offloadDateTable(){
+    let createBufferDate = document.createElement("div");
+    createBufferDate.className = "v1";
+    createBufferDate.id = "createBufferDate";
+    document.getElementById("createOffload").appendChild(createBufferDate);
+
+    let leftBufferDate = document.createElement("div")
+    leftBufferDate.className = "left";
+    leftBufferDate.id = "leftBufferDate";
+    leftBufferDate.innerHTML = "Date";
+    document.getElementById("createBufferDate").appendChild(leftBufferDate);
+
+    let bufferDateTable = document.createElement("table")
+    bufferDateTable.className = "bufferDate";
+    bufferDateTable.id = "bufferDateTable";
+    document.getElementById("createBufferDate").appendChild(bufferDateTable);
+
+    let bufferDateTbody = document.createElement("tbody")
+    bufferDateTbody.id = "bufferDateTbody";
+    document.getElementById("bufferDateTable").appendChild(bufferDateTbody);
+
+    let bufferDateTr = document.createElement("tr")
+    bufferDateTr.id = "bufferDateTr";
+    bufferDateTr.className = "buff";
+    document.getElementById("bufferDateTbody").appendChild(bufferDateTr);
+
+    for(let i = 0; i<12; i++){
+        tdBufferDate = document.createElement("td")
+        tdBufferDate.innerHTML = '<td><input></td>';
+        document.getElementById("bufferDateTr").appendChild(tdBufferDate);
+    }
+}
+
+//-------Add workers
+function addWorkersInput(){
+    let addWorkersDiv = document.createElement("div");
+    addWorkersDiv.id = "addWorkersDiv";
+    document.getElementById("addWorkersBlock").appendChild(addWorkersDiv);
+
+    let addWorkH4 = document.createElement("h4")
+    addWorkH4.innerHTML = "Add workers for today: ";
+    addWorkH4.id = "addworkers";
+    document.getElementById("addWorkersDiv").appendChild(addWorkH4);
+
+    let addWorkersInputDiv = document.createElement("div");
+    addWorkersInputDiv.className = "inputform";
+    addWorkersInputDiv.id = "addWorkersInputDiv";
+    document.getElementById("addWorkersDiv").appendChild(addWorkersInputDiv);
+
+    let addWorkersNameInput = document.createElement("input")
+    addWorkersNameInput.id = 'nameinput'
+    document.getElementById("addWorkersInputDiv").appendChild(addWorkersNameInput);
+
+    let addNameButton = document.createElement("button")
+    addNameButton.id = "myBtn";
+    addNameButton.setAttribute('type', "button")
+    addNameButton.innerHTML = 'Add to the shift';
+    document.getElementById("addWorkersInputDiv").appendChild(addNameButton);
+    addNameButton.onclick = addName;
+}
+
+//-----Display workingtoday
+function showWorkingToday(){
+    let showWorkingTodayP = document.createElement("p");
+    showWorkingTodayP.innerHTML = "Working today: ";
+    document.getElementById("workingtoday").appendChild(showWorkingTodayP);
+    firebaseScript();
+}
+
+function firebaseScript(){
+    let scriptModuleLoad = document.createElement("script")
+    scriptModuleLoad.setAttribute('type', "module")
+    scriptModuleLoad.setAttribute('src', "firebase.js")
+    document.getElementsByTagName('head')[0].appendChild(scriptModuleLoad);
+    document.getElementById("loaddata").value = forMatch;
+}
+
+function loadHomePage(){
+    console.log(page)
+    if(page == 2){
+
+    }else if(page != 2 && homePageEnabled == false){
+        document.getElementById("newId").style.display = 'none';
+        document.getElementById("mainDiv").style.removeProperty('display');
+        homePage(); 
+        page = 2;
+        homePageEnabled = true
+    }else if(page != 2 && homePageEnabled == true){
+        document.getElementById("newId").style.display = 'none';
+        document.getElementById("mainDiv").style.removeProperty('display');
+        page = 2;
+    }
+}
+
+function homePage(){
+    const welcomeMessage = document.createElement("h2");
+    welcomeMessage.id = "welcomeMessage";
+    welcomeMessage.textContent = "Hello, Visitor!";
+    document.getElementById("mainDiv").appendChild(welcomeMessage);
+}
+
+function checkCredentials(){
+    let inputName = document.getElementById("loginName").value
+    let inputPass = document.getElementById("loginPass").value  
+    if(inputName == "User" && inputPass == "1111"){
+        let saag = document.createElement("button")
+        saag.id = "saag"
+        saag.className = "navButton"
+        saag.innerHTML = "S.a.a.G board";
+        saag.onclick = createSaagMachineBoard;
+        let loginNav = document.getElementById("loginNav");
+        topnav.insertBefore(saag, loginNav)
+        modal.style.display = "none";
+        document.getElementById("loginNav").style.display = 'none';
+        document.getElementById("loginNav2").style.removeProperty('display');
+    }else{
+        alert("Wrong credentials")
+        inputName = "";
+        inputPass = "";
+    }
+}
+
+function confirmation() {
+    let text = "Do you want to log out?";
+    if (confirm(text) == true) {
+        document.getElementById("loginNav2").style.display = 'none';
+        document.getElementById("loginNav").style.removeProperty('display');
+        var saagremove = document.getElementById('saag');
+        saagremove.parentNode.removeChild(saagremove);
+        window.location.reload()
+        loadHomePage()
+    } else {
+      text = "You canceled!";
+    }
+  }
