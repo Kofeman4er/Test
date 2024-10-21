@@ -24,7 +24,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
             day = '0' + day;
         }
         let forMatch = `${year}-${month2+1}-${day}`
-
+        GetCount();
         function rowNewIndexes(){
             let rowHCount = document.getElementById("hyster").children[0].rows.length
             let rowBCount = document.getElementById("bt").children[0].rows.length
