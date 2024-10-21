@@ -661,6 +661,7 @@ function firebaseScript(){
     scriptModuleLoad.setAttribute('type', "module")
     scriptModuleLoad.setAttribute('src', "firebase.js")
     document.getElementsByTagName('head')[0].appendChild(scriptModuleLoad);
+    document.getElementById("loaddata").value = forMatch;
 }
 
 function loadHomePage(){
