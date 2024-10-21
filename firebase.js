@@ -24,7 +24,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
             day = '0' + day;
         }
         let forMatch = `${year}-${month2+1}-${day}`
-
+        GetCount();
         function rowNewIndexes(){
             let rowHCount = document.getElementById("hyster").children[0].rows.length
             let rowBCount = document.getElementById("bt").children[0].rows.length
@@ -287,12 +287,10 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
 
         function RetData(rowData){
             const dbRef = ref(db);
-
-            //let tempDate = "Sun Oct 06 2024"
+            
             let tempDate = document.getElementById("loaddata").value
-            get(child(dbRef, tempDate + "/"+ rowData +"/employeedata")).then((snapshot)=>{
+            get(child(dbRef, tempDate + "/"+ rowData +"/employeedata")).then((snapshot)=>{  //changed
                 if(snapshot.exists()){
-                    //console.log(snapshot.val())
                     document.getElementById(rowData).children[0].children[0].value = snapshot.val().Name;
                     document.getElementById(rowData).children[1].children[0].value = snapshot.val().zonetype;
                     document.getElementById(rowData).children[2].children[0].value = snapshot.val().d2;
@@ -344,6 +342,19 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
 
                         }
                     }
+                    try {               //changed
+                        for(let i = 2; i<columnCount-1; i++){
+                            if (document.contains(document.getElementById(rowData).children[i].children[1])) {
+                                document.getElementById(rowData).children[i].children[1].remove();
+                            }
+                            if (document.contains(document.getElementById(rowData).children[i].children[1])) {
+                                document.getElementById(rowData).children[i].children[1].remove();
+                            }
+                            document.getElementById(rowData).children[i].children[0].removeAttribute("hidden")
+                        }
+                    }catch (error) {
+                        console.error(error);
+                    }               //changed end
                     countFactDiff();
                 }else{
                     let rowCount = 0;
@@ -360,6 +371,26 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
                     }
 
                     document.querySelector("#plancount").innerHTML = "--"
+                    try {
+                        for(let i = 2; i<columnCount-1; i++){
+                            if (document.contains(document.getElementById("bt").children[0].children[0].children[i].children[1])) {
+                                document.getElementById("bt").children[0].children[0].children[i].children[1].remove();
+                            }
+                            if (document.contains(document.getElementById("bt").children[0].children[0].children[i].children[1])) {
+                                document.getElementById("bt").children[0].children[0].children[i].children[1].remove();
+                            }
+                            if (document.contains(document.getElementById("hyster").children[0].children[0].children[i].children[1])) {
+                                document.getElementById("hyster").children[0].children[0].children[i].children[1].remove();
+                            }
+                            if (document.contains(document.getElementById("hyster").children[0].children[0].children[i].children[1])) {
+                                document.getElementById("hyster").children[0].children[0].children[i].children[1].remove();
+                            }
+                        document.getElementById("bt").children[0].children[0].children[i].children[0].removeAttribute("hidden")
+                        document.getElementById("hyster").children[0].children[0].children[i].children[0].removeAttribute("hidden")
+                        }
+                    }catch (error) {
+                        console.error(error);
+                    }
                     alert("Data for this day does not exist")
                 }
             }).catch((error)=>{
@@ -389,7 +420,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
                     if(t == t){
                         sum = Number(sum) + t
                     }else{
-                        i++;
+                       
                     }
             }
             let btRoute = document.getElementById("bt").children[0]
@@ -398,7 +429,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/fireba
                 if(t == t){
                     sum = Number(sum) + t
                 }else{
-                    i++;
+                    
                 }   
             }
             document.getElementById("fact").children[0].rows[0].cells[n].innerHTML = sum;
